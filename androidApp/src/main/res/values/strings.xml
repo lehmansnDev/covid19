@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Covid-19</string>
+    <string name="global_summary">Global Summary</string>
+    <string name="search_country">Search country</string>
+    <string name="covid_api_not_available">The covid data could not be loaded. \n Check your internet connection and start the app again.</string>
+    <string name="today">Today</string>
+</resources>

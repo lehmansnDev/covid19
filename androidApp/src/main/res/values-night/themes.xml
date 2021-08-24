@@ -1,0 +1,13 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Theme.Covid19" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:colorPrimary">@color/dark_slate_gray</item>
+        <item name="android:colorAccent">@color/lighter_black</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Theme.Covid19.Launcher">
+        <item name="android:windowBackground">@drawable/splash_dark</item>
+    </style>
+</resources>
