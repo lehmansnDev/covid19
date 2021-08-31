@@ -1,10 +1,9 @@
-package de.simon.covid19.android.views
+package de.simon.covid19.android.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import de.simon.covid19.Greeting
-import android.widget.TextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,8 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import de.simon.covid19.android.R
-import de.simon.covid19.android.themes.Covid19Theme
-import dev.chrisbanes.accompanist.insets.ProvideWindowInsets
+import de.simon.covid19.android.ui.themes.Covid19Theme
 
 fun greet(): String {
     return Greeting().greeting()

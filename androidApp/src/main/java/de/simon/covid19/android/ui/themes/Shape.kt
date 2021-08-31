@@ -1,4 +1,4 @@
-package de.simon.covid19.android.themes
+package de.simon.covid19.android.ui.themes
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

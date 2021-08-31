@@ -1,4 +1,4 @@
-package de.simon.covid19.android.themes
+package de.simon.covid19.android.ui.themes
 
 import androidx.compose.ui.graphics.Color
 
