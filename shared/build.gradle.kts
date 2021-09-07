@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 val ktorVersion = "1.6.3"
 val serializationVersion = "1.2.2"
+val koinVersion = "3.0.0-alpha-2"
 
 
 
@@ -28,7 +29,11 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                // KTOR
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-cio:$ktorVersion")
+                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
             }
         }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -18,6 +19,8 @@ import de.simon.covid19.android.ui.views.FlagView
 import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.DetailViewModel
 import dev.chrisbanes.accompanist.insets.statusBarsHeight
+import org.koin.androidx.compose.getViewModel
+import org.koin.core.parameter.parametersOf
 import java.util.*
 
 @Composable

@@ -27,6 +27,7 @@ import coil.util.CoilUtils
 import de.simon.covid19.android.R
 import de.simon.covid19.android.ui.themes.Crimson
 import de.simon.covid19.android.ui.themes.DarkGray
+import de.simon.covid19.models.CountrySummary
 import okhttp3.OkHttpClient
 import java.text.NumberFormat
 import java.util.*

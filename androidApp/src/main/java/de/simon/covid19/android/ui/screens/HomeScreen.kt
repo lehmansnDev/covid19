@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
@@ -34,7 +35,7 @@ import de.simon.covid19.models.GlobalSummary
 import dev.chrisbanes.accompanist.insets.LocalWindowInsets
 import dev.chrisbanes.accompanist.insets.statusBarsHeight
 import dev.chrisbanes.accompanist.insets.toPaddingValues
-import kotlinx.coroutines.selects.selectUnbiased
+import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat
 import java.time.ZoneId
 import java.util.*
@@ -241,14 +242,10 @@ fun CountrySearchField(
 @Composable
 fun SearchTextField(modifier: Modifier, input: String, onInputChanged: (String) -> Unit) {
     var textFieldFocused by remember { mutableStateOf(false) }
-    var lastFocusState by remember { mutableStateOf(FocusState.Inactive) }
     Box(modifier = modifier, contentAlignment = Alignment.Center) {
         BasicTextField(
-            modifier = Modifier.onFocusChanged {
-                if (lastFocusState != it) {
-                    textFieldFocused = it == FocusState.Active
-                }
-                lastFocusState = it
+            modifier = Modifier.onFocusChanged { focusState ->
+                textFieldFocused = focusState.hasFocus
             },
             value = input,
             onValueChange = onInputChanged,

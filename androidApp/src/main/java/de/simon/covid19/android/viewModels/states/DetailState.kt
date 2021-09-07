@@ -1,7 +1,7 @@
 package de.simon.covid19.android.viewModels.states
 
-import de.simon.jetpacktest.models.CountryDetails
-import de.simon.jetpacktest.models.CountrySummary
+import de.simon.covid19.models.CountryDetails
+import de.simon.covid19.models.CountrySummary
 
 data class DetailState(
     val isLoading: Boolean,
