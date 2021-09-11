@@ -1,6 +1,5 @@
 package de.simon.covid19.android.ui.views
 
-import android.content.Context
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,13 +24,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
-import coil.util.CoilUtils
 import de.simon.covid19.android.R
 import de.simon.covid19.android.ui.themes.Crimson
 import de.simon.covid19.android.ui.themes.DarkGray
 import de.simon.covid19.models.CountrySummary
-import okhttp3.OkHttpClient
 import java.text.NumberFormat
 import java.util.*
 
@@ -76,16 +72,6 @@ fun CountryListView(country: CountrySummary, selectCountry: (String) -> Unit) {
         }
     }
 }
-
-//fun cachingImageLoader(context: Context): ImageLoader {
-//    return ImageLoader.Builder(context)
-//        .okHttpClient {
-//            OkHttpClient.Builder()
-//                .cache(CoilUtils.createDefaultCache(context))
-//                .build()
-//        }
-//        .build()
-//}
 
 fun calcPadding(size: Dp): Dp {
     val paddingValue = size.value / 6
