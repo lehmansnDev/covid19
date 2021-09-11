@@ -1,7 +1,9 @@
 package de.simon.covid19.repositories
 
 import android.util.Log
+import de.simon.covid19.Constants
 import de.simon.covid19.extensions.isInSameHour
+import de.simon.covid19.mapper.CountryDetailMapper
 import de.simon.covid19.mapper.Covid19Mapper
 import de.simon.covid19.models.CountryDetails
 import de.simon.covid19.models.CountrySummary
@@ -17,12 +19,12 @@ import java.time.format.DateTimeFormatter
 class Covid19Repository(
     private val networkService: NetworkService,
     private val preferencesService: PreferencesService,
-    private val covid19Mapper: Covid19Mapper
+    private val covid19Mapper: Covid19Mapper,
+    private val countryDetailMapper: CountryDetailMapper
 ) {
 
     companion object {
         private val TAG = Covid19Repository::class.simpleName
-        private const val DaysOfDetails = 29
     }
 
     suspend fun getTodaySummary(): Covid19Summary = withContext(Dispatchers.Default) {
@@ -59,26 +61,26 @@ class Covid19Repository(
             preferencesService.getCountrySummary(countryCode)
         }
 
-//    suspend fun getCountryDetails(countryCode: String): CountryDetails =
-//        withContext(Dispatchers.Default) {
-//            try {
-//                val toDate = LocalDateTime.of(
-//                    LocalDate.now().getYear(),
-//                    LocalDate.now().getMonth(),
-//                    LocalDate.now().getDayOfMonth(),
-//                    0,
-//                    0,
-//                    0
-//                )
-//                val fromDate = toDate.minusDays(DaysOfDetails.toLong())
-//
-//                val to = toDate.format(DateTimeFormatter.ISO_DATE_TIME)
-//                val from = fromDate.format(DateTimeFormatter.ISO_DATE_TIME)
-//                val countryDetailDTOs = networkService.getCountryDetails(countryCode, from, to)
-//                countryDetailMapper.map(countryDetailDTOs)
-//            } catch (e: Exception) {
-//                Log.e(TAG, e.message ?: "getCountryDetails exception")
-//                CountryDetails.EMPTY
-//            }
-//        }
+    suspend fun getCountryDetails(countryCode: String): CountryDetails =
+        withContext(Dispatchers.Default) {
+            try {
+                val toDate = LocalDateTime.of(
+                    LocalDate.now().getYear(),
+                    LocalDate.now().getMonth(),
+                    LocalDate.now().getDayOfMonth(),
+                    0,
+                    0,
+                    0
+                )
+                val fromDate = toDate.minusDays(Constants.DaysOfDetails.toLong())
+
+                val to = toDate.format(DateTimeFormatter.ISO_DATE_TIME)
+                val from = fromDate.format(DateTimeFormatter.ISO_DATE_TIME)
+                val countryDetailDTOs = networkService.getCountryDetails(countryCode, from, to)
+                countryDetailMapper.map(countryDetailDTOs)
+            } catch (e: Exception) {
+                Log.e(TAG, e.message ?: "getCountryDetails exception")
+                CountryDetails.EMPTY
+            }
+        }
 }

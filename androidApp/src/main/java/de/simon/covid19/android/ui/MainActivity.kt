@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
+import com.google.accompanist.insets.ProvideWindowInsets
 import de.simon.covid19.android.R
 import de.simon.covid19.android.ui.navigation.NavGraph
 import de.simon.covid19.android.ui.themes.Covid19Theme
@@ -28,9 +29,9 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             Covid19Theme {
-//                ProvideWindowInsets {
-//                }
-                App()
+                ProvideWindowInsets {
+                    App()
+                }
             }
         }
     }

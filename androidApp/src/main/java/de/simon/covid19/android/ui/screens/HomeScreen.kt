@@ -12,8 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -24,6 +22,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.LocalWindowInsets
+import com.google.accompanist.insets.rememberInsetsPaddingValues
+import com.google.accompanist.insets.statusBarsHeight
 import de.simon.covid19.android.R
 import de.simon.covid19.android.ui.themes.LightGray
 import de.simon.covid19.android.ui.themes.WhiteSmoke
@@ -32,9 +33,6 @@ import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.HomeViewModel
 import de.simon.covid19.android.viewModels.actions.HomeAction
 import de.simon.covid19.models.GlobalSummary
-import dev.chrisbanes.accompanist.insets.LocalWindowInsets
-import dev.chrisbanes.accompanist.insets.statusBarsHeight
-import dev.chrisbanes.accompanist.insets.toPaddingValues
 import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat
 import java.time.ZoneId
@@ -85,7 +83,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                     Modifier
                         .fillMaxHeight()
                         .padding(8.dp, 0.dp),
-                    contentPadding = LocalWindowInsets.current.navigationBars.toPaddingValues()
+                    contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.navigationBars)
                 ) {
                     items(items = viewState.value.filteredCountries) { countries ->
                         CountryListView(country = countries, selectCountry = selectCountry)

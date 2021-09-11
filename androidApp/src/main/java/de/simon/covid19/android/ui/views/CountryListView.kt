@@ -1,7 +1,10 @@
 package de.simon.covid19.android.ui.views
 
 import android.content.Context
-import androidx.compose.foundation.*
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -74,15 +77,15 @@ fun CountryListView(country: CountrySummary, selectCountry: (String) -> Unit) {
     }
 }
 
-fun cachingImageLoader(context: Context): ImageLoader {
-    return ImageLoader.Builder(context)
-        .okHttpClient {
-            OkHttpClient.Builder()
-                .cache(CoilUtils.createDefaultCache(context))
-                .build()
-        }
-        .build()
-}
+//fun cachingImageLoader(context: Context): ImageLoader {
+//    return ImageLoader.Builder(context)
+//        .okHttpClient {
+//            OkHttpClient.Builder()
+//                .cache(CoilUtils.createDefaultCache(context))
+//                .build()
+//        }
+//        .build()
+//}
 
 fun calcPadding(size: Dp): Dp {
     val paddingValue = size.value / 6

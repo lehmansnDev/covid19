@@ -14,14 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsHeight
 import de.simon.covid19.android.R
 import de.simon.covid19.android.ui.views.FlagView
 import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.DetailViewModel
-import dev.chrisbanes.accompanist.insets.statusBarsHeight
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
-import java.util.*
 
 @Composable
 fun DetailScreen(countryCode: String, backPress: () -> Unit) {

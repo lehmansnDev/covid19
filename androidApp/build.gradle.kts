@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("org.jetbrains.kotlin.plugin.serialization").version("1.4.30")
 }
 
 android {
@@ -29,6 +28,7 @@ android {
     }
 }
 
+
 dependencies {
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.4.0")
@@ -46,11 +46,12 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.3.1")
 
     // NAVIGATION (important: not 2.4.0-aplpha08)
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha01")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha08")
 
     // ACCOMPANIST
-    implementation("dev.chrisbanes.accompanist:accompanist-coil:0.6.2")
-    implementation("dev.chrisbanes.accompanist:accompanist-insets:0.6.2")
+    implementation("com.google.accompanist:accompanist-insets:0.18.0")
+    // COIL
+    implementation("io.coil-kt:coil-compose:1.3.2")
 
     // KOIN
     implementation("io.insert-koin:koin-android:3.1.2")

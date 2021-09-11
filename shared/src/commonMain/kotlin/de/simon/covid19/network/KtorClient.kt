@@ -1,7 +1,6 @@
 package de.simon.covid19.network
 
 import io.ktor.client.*
-import io.ktor.client.engine.cio.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -10,7 +9,7 @@ import io.ktor.http.*
 
 class KtorClient {
     fun createClient(): HttpClient {
-        return HttpClient(CIO) {
+        return HttpClient() {
             // Json
             install(JsonFeature) {
                 serializer = KotlinxSerializer(json)

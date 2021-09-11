@@ -2,6 +2,7 @@ package de.simon.covid19.android.koin
 
 import de.simon.covid19.android.viewModels.DetailViewModel
 import de.simon.covid19.android.viewModels.HomeViewModel
+import de.simon.covid19.mapper.CountryDetailMapper
 import de.simon.covid19.mapper.CountryMapper
 import de.simon.covid19.mapper.Covid19Mapper
 import de.simon.covid19.mapper.GlobalMapper
@@ -15,13 +16,13 @@ val mapperModule = module {
     single { GlobalMapper() }
     single { CountryMapper() }
     single { Covid19Mapper(get(), get()) }
-    // single { CountryDetailMapper() }
+    single { CountryDetailMapper() }
 }
 
 val serviceModule = module {
     single { NetworkService() }
     single { PreferencesService(get(), get()) }
-    single { Covid19Repository(get(), get(), get()) }
+    single { Covid19Repository(get(), get(), get(), get()) }
 }
 
 val viewModelModule = module {

@@ -19,7 +19,7 @@ val LighterBlack = Color(0xFF222222)
 val Crimson = Color(0xFFD32E2E)
 val DarkGray = Color(0xFF666666)
 
-val TealSlateGray = Color (0xFF32544F)
+val TealSlateGray = Color(0xFF32544F)
 
 val TealDarkGray = Color(0xFF004A41)
 val TealBlack = Color(0xFF001F1B)

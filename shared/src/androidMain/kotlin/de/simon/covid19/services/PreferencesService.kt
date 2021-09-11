@@ -11,7 +11,10 @@ import kotlinx.serialization.json.Json
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-actual class PreferencesService(private val context: Context, private val countryMapper: CountryMapper) {
+actual class PreferencesService(
+    private val context: Context,
+    private val countryMapper: CountryMapper
+) {
 
     actual companion object {
         internal actual val COVID_19_STATISTIC_KEY = "COVID_19_STATISTIC_KEY"
@@ -61,6 +64,4 @@ actual class PreferencesService(private val context: Context, private val countr
         val countryDTO = getCovid19Summary()!!.countries.first { it.countryCode == countryCode }
         return countryMapper.map(countryDTO)
     }
-
-
 }

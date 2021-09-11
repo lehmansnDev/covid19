@@ -29,7 +29,8 @@ fun NavGraph(startDestination: String = Destinations.HOME_ROUTE) {
         }
         composable("${Destinations.DETAIL_ROUTE}/${Destinations.COUNTRY_CODE_KEY}") { backStackEntry ->
             DetailScreen(
-                countryCode = backStackEntry.arguments?.getString(Destinations.COUNTRY_CODE_KEY) ?: "",
+                countryCode = backStackEntry.arguments?.getString(Destinations.COUNTRY_CODE_KEY)
+                    ?: "",
                 backPress = actions.backPress
             )
         }
