@@ -32,11 +32,9 @@ import de.simon.covid19.android.ui.views.CountryListView
 import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.HomeViewModel
 import de.simon.covid19.android.viewModels.actions.HomeAction
+import de.simon.covid19.extensions.toDateTimeString
 import de.simon.covid19.models.GlobalSummary
 import org.koin.androidx.compose.getViewModel
-import java.text.DateFormat
-import java.time.ZoneId
-import java.util.*
 
 @Composable
 fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getViewModel()) {
@@ -141,8 +139,7 @@ fun GlobalSummary(
                 modifier = Modifier
                     .padding(8.dp, 0.dp),
                 textAlign = TextAlign.Center,
-                text = DateFormat.getDateTimeInstance()
-                    .format(Date.from(global.date.atZone(ZoneId.systemDefault()).toInstant())),
+                text = global.date.toDateTimeString(),
                 color = WhiteSmoke,
                 style = MaterialTheme.typography.subtitle2
             )

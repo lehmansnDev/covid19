@@ -2,7 +2,7 @@ package de.simon.covid19.services
 
 import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.models.Covid19SummaryDTO
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 actual class PreferencesService {
 

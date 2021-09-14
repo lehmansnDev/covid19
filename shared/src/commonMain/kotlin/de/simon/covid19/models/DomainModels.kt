@@ -1,6 +1,6 @@
 package de.simon.covid19.models
 
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 data class Covid19Summary(
     val global: GlobalSummary,
@@ -9,7 +9,11 @@ data class Covid19Summary(
     val isEmpty: Boolean
 ) {
     companion object {
-        val EMPTY = Covid19Summary(GlobalSummary.EMPTY, listOf(), LocalDateTime.now(), true)
+        val EMPTY =
+            Covid19Summary(
+                GlobalSummary.EMPTY, listOf(),
+                LocalDateTime(0, 0, 0, 0, 0, 0), true
+            )
     }
 }
 
@@ -23,7 +27,10 @@ data class GlobalSummary(
     val date: LocalDateTime
 ) {
     companion object {
-        val EMPTY = GlobalSummary(0, 0, 0, 0, 0, 0, LocalDateTime.now())
+        val EMPTY = GlobalSummary(
+            0, 0, 0, 0, 0, 0,
+            LocalDateTime(0, 0, 0, 0, 0, 0)
+        )
     }
 }
 
@@ -42,7 +49,10 @@ data class CountrySummary(
     val date: LocalDateTime
 ) {
     companion object {
-        val EMPTY = CountrySummary("", "", -1, "", 0, 0, 0, 0, 0, 0, LocalDateTime.now())
+        val EMPTY = CountrySummary(
+            "", "", -1, "", 0, 0, 0, 0, 0, 0,
+            LocalDateTime(0, 0, 0, 0, 0, 0)
+        )
     }
 }
 
@@ -69,7 +79,7 @@ data class StatisticHistory(
     val history: List<StatisticValue>
 ) {
     companion object {
-        val EMPTY = StatisticHistory(0, 0, LocalDateTime.MIN, listOf())
+        val EMPTY = StatisticHistory(0, 0, LocalDateTime(0, 0, 0, 0, 0, 0), listOf())
     }
 }
 

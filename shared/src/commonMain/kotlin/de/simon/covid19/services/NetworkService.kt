@@ -1,6 +1,5 @@
 package de.simon.covid19.services
 
-import android.util.Log
 import de.simon.covid19.models.CountryDetailDTO
 import de.simon.covid19.models.Covid19SummaryDTO
 import de.simon.covid19.network.KtorClient
@@ -8,9 +7,6 @@ import io.ktor.client.*
 import io.ktor.client.request.*
 
 class NetworkService {
-    companion object {
-        private val TAG = NetworkService::class.simpleName
-    }
 
     private var httpClient: HttpClient
 
@@ -28,7 +24,7 @@ class NetworkService {
         from: String,
         to: String
     ): List<CountryDetailDTO> {
-        Log.d(TAG, "$countryCode: $from - $to")
+        // Log.d(TAG, "$countryCode: $from - $to")
         return httpClient.get("https://api.covid19api.com/total/country/$countryCode?from=$from&to=$to")
     }
 }

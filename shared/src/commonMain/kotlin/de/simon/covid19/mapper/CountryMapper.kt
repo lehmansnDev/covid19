@@ -2,8 +2,9 @@ package de.simon.covid19.mapper
 
 import de.simon.covid19.models.CountryDTO
 import de.simon.covid19.models.CountrySummary
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class CountryMapper {
     fun map(index: Int, input: CountryDTO): CountrySummary {
@@ -18,7 +19,7 @@ class CountryMapper {
             input.totalDeaths,
             input.newRecovered,
             input.totalRecovered,
-            LocalDateTime.parse(input.date, DateTimeFormatter.ISO_DATE_TIME)
+            Instant.parse(input.date).toLocalDateTime(TimeZone.UTC)
         )
     }
 
@@ -34,7 +35,7 @@ class CountryMapper {
             input.totalDeaths,
             input.newRecovered,
             input.totalRecovered,
-            LocalDateTime.parse(input.date, DateTimeFormatter.ISO_DATE_TIME)
+            Instant.parse(input.date).toLocalDateTime(TimeZone.UTC)
         )
     }
 }

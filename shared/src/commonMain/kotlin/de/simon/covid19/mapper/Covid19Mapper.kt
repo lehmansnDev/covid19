@@ -2,8 +2,9 @@ package de.simon.covid19.mapper
 
 import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.Covid19SummaryDTO
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class Covid19Mapper(
     private val globalMapper: GlobalMapper,
@@ -11,7 +12,7 @@ class Covid19Mapper(
 ) : Mapper<Covid19SummaryDTO, Covid19Summary> {
 
     override fun map(input: Covid19SummaryDTO): Covid19Summary {
-        val date = LocalDateTime.parse(input.date, DateTimeFormatter.ISO_DATE_TIME)
+        val date = Instant.parse(input.date).toLocalDateTime(TimeZone.UTC)
         val global = globalMapper.map(input.global)
         val sortedCountries = input.countries
             .sortedByDescending { it.newConfirmed }

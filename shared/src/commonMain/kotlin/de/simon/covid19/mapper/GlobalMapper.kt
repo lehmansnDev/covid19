@@ -2,8 +2,9 @@ package de.simon.covid19.mapper
 
 import de.simon.covid19.models.GlobalDTO
 import de.simon.covid19.models.GlobalSummary
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
 class GlobalMapper : Mapper<GlobalDTO, GlobalSummary> {
 
@@ -15,7 +16,7 @@ class GlobalMapper : Mapper<GlobalDTO, GlobalSummary> {
             input.totalDeaths,
             input.newRecovered,
             input.totalRecovered,
-            LocalDateTime.parse(input.date, DateTimeFormatter.ISO_DATE_TIME)
+            Instant.parse(input.date).toLocalDateTime(TimeZone.UTC)
         )
     }
 }

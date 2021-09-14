@@ -1,23 +1,18 @@
 package de.simon.covid19.mapper
 
-import android.util.Log
 import de.simon.covid19.Constants
 import de.simon.covid19.models.CountryDetailDTO
 import de.simon.covid19.models.CountryDetails
 import de.simon.covid19.models.StatisticHistory
 import de.simon.covid19.models.StatisticValue
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 import kotlin.math.max
 import kotlin.math.min
 
 
 class CountryDetailMapper : Mapper<List<CountryDetailDTO>, CountryDetails> {
-
-    companion object {
-        private val TAG = CountryDetailMapper::class.simpleName
-    }
-
     override fun map(input: List<CountryDetailDTO>): CountryDetails {
         val initialDetailDTO = input
             .takeLast(Constants.DaysOfDetails)
@@ -39,33 +34,32 @@ class CountryDetailMapper : Mapper<List<CountryDetailDTO>, CountryDetails> {
         val relevantInput = input
             // And always the same number
             .takeLast(Constants.DaysOfDetails - 1)
-        val firstDate =
-            LocalDateTime.parse(relevantInput.first().date, DateTimeFormatter.ISO_DATE_TIME)
+
+        val firstDate = Instant.parse(relevantInput.first().date).toLocalDateTime(TimeZone.UTC)
 
         relevantInput
-            .forEach {
-                val date = LocalDateTime.parse(it.date, DateTimeFormatter.ISO_DATE_TIME)
+            .forEach { countryDetailsDto ->
+                val date = Instant.parse(countryDetailsDto.date).toLocalDateTime(TimeZone.UTC)
                 // Confirmed
-                val confirmedDiff = it.confirmed - lastConfirmedValue
+                val confirmedDiff = countryDetailsDto.confirmed - lastConfirmedValue
                 confirmedMax = max(confirmedDiff, confirmedMax)
                 confirmedMin = min(confirmedDiff, confirmedMin)
                 confirmedHistory.add(StatisticValue(confirmedDiff, date))
-                lastConfirmedValue = it.confirmed
+                lastConfirmedValue = countryDetailsDto.confirmed
                 // Deaths
-                val deathsDiff = it.deaths - lastDeathsValue
+                val deathsDiff = countryDetailsDto.deaths - lastDeathsValue
                 deathsMax = max(deathsDiff, deathsMax)
                 deathsMin = min(deathsDiff, deathsMin)
                 deathsHistory.add(StatisticValue(deathsDiff, date))
-                lastDeathsValue = it.deaths
+                lastDeathsValue = countryDetailsDto.deaths
                 // Recovered
-                val recoveredDiff = it.recovered - lastRecoveredValue
+                val recoveredDiff = countryDetailsDto.recovered - lastRecoveredValue
                 recoveredMax = max(recoveredDiff, recoveredMax)
                 recoveredMin = min(recoveredDiff, recoveredMin)
                 recoveredHistory.add(StatisticValue(recoveredDiff, date))
-                lastRecoveredValue = it.recovered
+                lastRecoveredValue = countryDetailsDto.recovered
             }
 
-        Log.d(TAG, "Confirmed history values: ${confirmedHistory.size}")
         return CountryDetails(
             isEmpty = false,
             StatisticHistory(confirmedMin, confirmedMax, firstDate, confirmedHistory),

@@ -4,12 +4,11 @@ import android.content.Context
 import de.simon.covid19.mapper.CountryMapper
 import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.models.Covid19SummaryDTO
+import kotlinx.datetime.*
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 actual class PreferencesService(
     private val context: Context,
@@ -22,12 +21,13 @@ actual class PreferencesService(
     }
 
     actual fun getLastUpdate(): LocalDateTime {
+
+        val min = Instant.fromEpochMilliseconds(0).toLocalDateTime(TimeZone.UTC)
         val sharedPref = context.getSharedPreferences(LAST_UPDATE_KEY, Context.MODE_PRIVATE)
-            ?: return LocalDateTime.MIN
-        val minDateString = LocalDateTime.MIN.format(DateTimeFormatter.ISO_DATE_TIME)
+            ?: return min
         val dateString =
-            sharedPref.getString(LAST_UPDATE_KEY, minDateString) ?: return LocalDateTime.MIN
-        return LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME)
+            sharedPref.getString(LAST_UPDATE_KEY, min.toString()) ?: return min
+        return Instant.parse(dateString).toLocalDateTime(TimeZone.UTC)
     }
 
     @ExperimentalSerializationApi
@@ -47,7 +47,8 @@ actual class PreferencesService(
             putString(COVID_19_STATISTIC_KEY, json)
             apply()
         }
-        setLastUpdate(LocalDateTime.now())
+        val now = Clock.System.now()
+        setLastUpdate(now.toLocalDateTime(TimeZone.UTC))
     }
 
     private fun setLastUpdate(localDateTime: LocalDateTime) {
@@ -55,7 +56,7 @@ actual class PreferencesService(
             context.getSharedPreferences(LAST_UPDATE_KEY, Context.MODE_PRIVATE) ?: return
 
         with(sharedPref.edit()) {
-            putString(LAST_UPDATE_KEY, localDateTime.format(DateTimeFormatter.ISO_DATE_TIME))
+            putString(LAST_UPDATE_KEY, localDateTime.toString())
             apply()
         }
     }

@@ -4,6 +4,7 @@ val ktorVersion = "1.6.3"
 val serializationVersion = "1.2.2"
 val coroutineVersion = "1.5.2"
 val koinVersion = "3.0.0-alpha-2"
+val datetimeVersion = "0.2.1"
 
 plugins {
     kotlin("multiplatform")
@@ -36,6 +37,9 @@ kotlin {
 
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
+
+                // DATETIME
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
             }
         }
         val androidMain by getting {
@@ -49,6 +53,8 @@ kotlin {
             dependencies {
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+
+                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
             }
         }
         val commonTest by getting {

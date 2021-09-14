@@ -59,4 +59,6 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-workmanager:3.1.2")
     implementation("io.insert-koin:koin-androidx-compose:3.1.2")
 
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:$0.2.1")
+
 }
