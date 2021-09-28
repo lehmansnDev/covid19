@@ -61,9 +61,14 @@ class Covid19Repository(
             try {
                 val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)
                 val toDate = LocalDateTime(now.year, now.month, now.dayOfMonth, 0, 0, 0)
-                val fromDate = toDate.minus(DateTimePeriod(days = Constants.DaysOfDetails), TimeZone.UTC)
+                val fromDate =
+                    toDate.minus(DateTimePeriod(days = Constants.DaysOfDetails), TimeZone.UTC)
 
-                val countryDetailDTOs = networkService.getCountryDetails(countryCode, fromDate.toString(), toDate.toString())
+                val countryDetailDTOs = networkService.getCountryDetails(
+                    countryCode,
+                    fromDate.toString(),
+                    toDate.toString()
+                )
                 countryDetailMapper.map(countryDetailDTOs)
             } catch (e: Exception) {
                 // Log.e(TAG, e.message ?: "getCountryDetails exception")

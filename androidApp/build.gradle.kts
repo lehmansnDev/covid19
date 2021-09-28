@@ -55,9 +55,9 @@ dependencies {
     // KOIN
     implementation("io.insert-koin:koin-android:3.1.2")
     implementation("io.insert-koin:koin-android-ext:3.0.1-beta-1")
-    implementation("io.insert-koin:koin-androidx-workmanager:3.1.2")
     implementation("io.insert-koin:koin-androidx-compose:3.1.2")
 
+    // KOTLINX DATETIME
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.0")
 
 }
