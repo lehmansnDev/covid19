@@ -4,7 +4,7 @@ val ktorVersion = "1.6.3"
 val serializationVersion = "1.2.2"
 val coroutineVersion = "1.5.2"
 val koinVersion = "3.0.0-alpha-2"
-val datetimeVersion = "0.2.1"
+val datetimeVersion = "0.3.0"
 
 plugins {
     kotlin("multiplatform")

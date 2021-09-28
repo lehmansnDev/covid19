@@ -5,14 +5,14 @@ import kotlinx.datetime.LocalDateTime
 data class Covid19Summary(
     val global: GlobalSummary,
     val countries: List<CountrySummary>,
-    val date: LocalDateTime,
+    val date: LocalDateTime?,
     val isEmpty: Boolean
 ) {
     companion object {
         val EMPTY =
             Covid19Summary(
                 GlobalSummary.EMPTY, listOf(),
-                LocalDateTime(0, 0, 0, 0, 0, 0), true
+                null, true
             )
     }
 }
@@ -24,12 +24,12 @@ data class GlobalSummary(
     val totalDeaths: Int,
     val newRecovered: Int,
     val totalRecovered: Int,
-    val date: LocalDateTime
+    val date: LocalDateTime?
 ) {
     companion object {
         val EMPTY = GlobalSummary(
             0, 0, 0, 0, 0, 0,
-            LocalDateTime(0, 0, 0, 0, 0, 0)
+            null
         )
     }
 }
@@ -46,12 +46,12 @@ data class CountrySummary(
     val totalDeaths: Int,
     val newRecovered: Int,
     val totalRecovered: Int,
-    val date: LocalDateTime
+    val date: LocalDateTime?
 ) {
     companion object {
         val EMPTY = CountrySummary(
             "", "", -1, "", 0, 0, 0, 0, 0, 0,
-            LocalDateTime(0, 0, 0, 0, 0, 0)
+            null
         )
     }
 }
@@ -75,11 +75,11 @@ data class CountryDetails(
 data class StatisticHistory(
     val min: Int,
     val max: Int,
-    val firstDate: LocalDateTime,
+    val firstDate: LocalDateTime?,
     val history: List<StatisticValue>
 ) {
     companion object {
-        val EMPTY = StatisticHistory(0, 0, LocalDateTime(0, 0, 0, 0, 0, 0), listOf())
+        val EMPTY = StatisticHistory(0, 0, null, listOf())
     }
 }
 

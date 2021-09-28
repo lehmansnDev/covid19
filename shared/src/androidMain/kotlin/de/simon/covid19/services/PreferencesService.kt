@@ -26,7 +26,7 @@ actual class PreferencesService(
         val sharedPref = context.getSharedPreferences(LAST_UPDATE_KEY, Context.MODE_PRIVATE)
             ?: return min
         val dateString =
-            sharedPref.getString(LAST_UPDATE_KEY, min.toString()) ?: return min
+            sharedPref.getString(LAST_UPDATE_KEY, null) ?: return min
         return Instant.parse(dateString).toLocalDateTime(TimeZone.UTC)
     }
 

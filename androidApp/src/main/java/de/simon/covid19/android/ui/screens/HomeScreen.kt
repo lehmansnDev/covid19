@@ -139,7 +139,7 @@ fun GlobalSummary(
                 modifier = Modifier
                     .padding(8.dp, 0.dp),
                 textAlign = TextAlign.Center,
-                text = global.date.toDateTimeString(),
+                text = global.date!!.toDateTimeString(),
                 color = WhiteSmoke,
                 style = MaterialTheme.typography.subtitle2
             )
