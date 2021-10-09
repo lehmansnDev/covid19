@@ -8,9 +8,10 @@
 
 import SwiftUI
 
-var gradient = LinearGradient(gradient: Gradient(colors: [.blue, .white]),
-                             startPoint: .topLeading,
-                             endPoint: .bottomTrailing)
+var gradient = LinearGradient(gradient: Gradient(colors: [
+    Color(red: 0, green: 122/255.0, blue: 122/255.0),
+    Color(red: 0, green: 168/255.0, blue: 149/255.0)]),
+    startPoint: .topLeading, endPoint: .bottomTrailing)
 
 struct HomeView: View {
     var body: some View {
@@ -21,9 +22,9 @@ struct HomeView: View {
                 GlobalStatisticsView()
                 ScrollView(.vertical) {
                     VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                        CountryView(countryName: "USA", index: 0)
-                        CountryView(countryName: "Germany", index: 1)
-                        CountryView(countryName: "France", index: 2)
+                        CountryView(countryName: "USA", index: 0, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                        CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
+                        CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
                     }
                 }
             }.edgesIgnoringSafeArea(.bottom)
@@ -35,9 +36,10 @@ struct GlobalStatisticsView: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 24)
+            BottomRoundedCornersShape(radius: 24)
                 .fill(gradient)
                 .edgesIgnoringSafeArea(.all)
+                .shadow(color: .gray, radius: 3, x: 0, y: 3)
             
             VStack(spacing: 20) {
                 Text("28.09.2021 18:09:09")
@@ -48,7 +50,8 @@ struct GlobalStatisticsView: View {
                     SingleGlobalStatisticsView(totalValues: 0, newValues: 0)
                 }
             }
-        }.scaledToFit()
+        }
+        .scaledToFit()
     }
 }
 
@@ -71,6 +74,7 @@ struct CountryView: View {
 
     var countryName: String
     var index: Int
+    var flagUrl: String
 
     var body: some View {
         ZStack {
@@ -78,7 +82,7 @@ struct CountryView: View {
                 IndexView(index: index)
                 CountryStatisticsView(countryName: countryName)
                 Spacer()
-                FlagView()
+                FlagView(flagUrl: flagUrl)
             }.background(Capsule()
                             .fill(Color.white)
                             .shadow(color: .gray, radius: 2, x: 0, y: 2))
@@ -95,9 +99,16 @@ struct IndexView: View {
     var body: some View {
         ZStack {
             Text("\(index)")
+                .frame(width: 24, height: 24)
+                .font(.system(size: 14))
+                .foregroundColor(.white)
+                .padding(4)
+                .overlay(Circle().stroke(.white, lineWidth: 2))
+                .padding(16)
         }
-            .scaledToFit()
-            .padding()
+        .background(gradient)
+        .clipShape(CircleLeftShape())
+        .scaledToFit()
     }
 }
 
@@ -109,6 +120,7 @@ struct CountryStatisticsView: View {
         ZStack {
             VStack(alignment: .leading) {
                 Text(countryName)
+                    .fontWeight(.bold)
                 HStack {
                     StatisticsView(color: .red, totalValues: 47362899, newValues: 242134)
                     StatisticsView(color: .gray, totalValues: 84748, newValues: 2151)
@@ -120,12 +132,14 @@ struct CountryStatisticsView: View {
 
 struct FlagView: View {
 
+    var flagUrl: String
+    
     var body: some View {
         ZStack {
             Circle()
                 .foregroundColor(Color(red: 0.80, green: 0.80, blue: 0.80))
-                .frame(width: 40, height: 40)
-                .padding()
+                .frame(width: 48, height: 48)
+                .padding(8)
         }
     }
 }
@@ -143,8 +157,10 @@ struct StatisticsView: View {
             VStack {
                 VStack(spacing: 5) {
                     Text("\(totalValues)")
+                        .font(.system(size: 10))
                     Text("+ \(newValues)")
                         .foregroundColor(color)
+                        .font(.system(size: 10))
                 }
             }
         }
