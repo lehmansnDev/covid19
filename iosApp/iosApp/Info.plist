@@ -47,6 +47,9 @@
 		<string>product_sans_bold.ttf</string>
 		<string>product_sans_italic.ttf</string>
 		<string>product_sans_regular.ttf</string>
+		<string>Font Awesome 5 Brands-Regular-400.otf</string>
+		<string>Font Awesome 5 Free-Regular-400.otf</string>
+		<string>Font Awesome 5 Free-Solid-900.otf</string>
 	</array>
 	<key>UILaunchScreen</key>
 	<dict/>

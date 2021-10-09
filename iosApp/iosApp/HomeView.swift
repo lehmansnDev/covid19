@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FASwiftUI
 
 var gradient = LinearGradient(gradient: Gradient(colors: [
     Color(red: 0, green: 122/255.0, blue: 122/255.0),
@@ -24,6 +25,8 @@ struct HomeView: View {
                     ScrollView(.vertical) {
                         VStack(alignment: HorizontalAlignment.center, spacing: 12) {
                             CountryView(countryName: "USA", index: 1, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
+                            CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
                             CountryView(countryName: "USA", index: 2, flagUrl: "https://www.countryflags.io/US/flat/64.png")
                             CountryView(countryName: "USA", index: 3, flagUrl: "https://www.countryflags.io/US/flat/64.png")
                             CountryView(countryName: "USA", index: 4, flagUrl: "https://www.countryflags.io/US/flat/64.png")
@@ -31,8 +34,6 @@ struct HomeView: View {
                             CountryView(countryName: "USA", index: 6, flagUrl: "https://www.countryflags.io/US/flat/64.png")
                             CountryView(countryName: "USA", index: 7, flagUrl: "https://www.countryflags.io/US/flat/64.png")
                             CountryView(countryName: "USA", index: 8, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
-                            CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
                         }
                         .offset(y: 40)
                         .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
@@ -62,9 +63,24 @@ struct GlobalStatisticsView: View {
                     .foregroundColor(.white)
                     .font(Font.custom("product_sans_regular", size: 12))
                 HStack(alignment: VerticalAlignment.center, spacing: 20) {
-                    SingleGlobalStatisticsView(totalValues: 4753057, newValues: 4585)
-                    SingleGlobalStatisticsView(totalValues: 232001832, newValues: 325341)
-                    SingleGlobalStatisticsView(totalValues: 0, newValues: 0)
+                    SingleGlobalStatisticsView(totalValues: 4753057,
+                                               newValues: 4585,
+                                               iconName: "skull-crossbones",
+                                               iconSize: 20,
+                                               totalValuesSize: 16)
+                        .frame(maxWidth: .infinity)
+                    SingleGlobalStatisticsView(totalValues: 232001832,
+                                               newValues: 325341,
+                                               iconName: "virus",
+                                               iconSize: 24,
+                                               totalValuesSize: 18)
+                        .frame(maxWidth: .infinity)
+                    SingleGlobalStatisticsView(totalValues: 0,
+                                               newValues: 0,
+                                               iconName: "shield-virus",
+                                               iconSize: 20,
+                                               totalValuesSize: 16)
+                        .frame(maxWidth: .infinity)
                 }
             }
         }
@@ -75,13 +91,17 @@ struct GlobalStatisticsView: View {
 struct SingleGlobalStatisticsView: View {
     var totalValues: Int
     var newValues: Int
+    var iconName: String
+    var iconSize: CGFloat
+    var totalValuesSize: CGFloat
 
     var body: some View {
         VStack(spacing: 8) {
-            Image(systemName: "circle")
+            FAText(iconName: iconName, size: iconSize)
+                .foregroundColor(.white)
             Text("\(totalValues)")
                 .foregroundColor(.white)
-                .font(Font.custom("product_sans_regular", size: 18))
+                .font(Font.custom("product_sans_regular", size: totalValuesSize))
             Text("+ \(newValues)")
                 .foregroundColor(.white)
                 .font(Font.custom("product_sans_regular", size: 14))
@@ -142,8 +162,10 @@ struct CountryStatisticsView: View {
                     .font(Font.custom("product_sans_bold", size: 16))
                     .fontWeight(.bold)
                 HStack {
-                    StatisticsView(color: .red, totalValues: 47362899, newValues: 242134)
-                    StatisticsView(color: .gray, totalValues: 84748, newValues: 2151)
+                    StatisticsView(color: .red, totalValues: 47362899, newValues: 242134, iconName: "virus")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    StatisticsView(color: .gray, totalValues: 84748, newValues: 2151, iconName: "skull-crossbones")
+                        .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
         }.scaledToFit()
@@ -173,10 +195,13 @@ struct StatisticsView: View {
     var color: Color
     var totalValues: Int
     var newValues: Int
+    var iconName: String
 
     var body: some View {
         HStack {
-            Image(systemName: "circle")
+            FAText(iconName: iconName, size: 14)
+                .foregroundColor(.white)
+                .padding(4)
                 .background(Circle().fill(color))
             VStack {
                 VStack(spacing: 2) {
