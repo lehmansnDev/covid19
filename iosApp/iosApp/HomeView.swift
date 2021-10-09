@@ -20,14 +20,30 @@ struct HomeView: View {
                 .edgesIgnoringSafeArea(.all)
             VStack {
                 GlobalStatisticsView()
-                ScrollView(.vertical) {
-                    VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                        CountryView(countryName: "USA", index: 0, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                        CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
-                        CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
+                GeometryReader { geometry in
+                    ScrollView(.vertical) {
+                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
+                            CountryView(countryName: "USA", index: 1, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 2, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 3, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 4, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 5, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 6, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 7, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "USA", index: 8, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                            CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
+                            CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
+                        }
+                        .offset(y: 40)
+                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
                     }
+                    .frame(width: geometry.size.width, height: geometry.size.height + 40)
+                    .offset(y: -40)
+                    .edgesIgnoringSafeArea(.bottom)
                 }
-            }.edgesIgnoringSafeArea(.bottom)
+                .zIndex(-1)
+            }
+            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }
@@ -44,6 +60,7 @@ struct GlobalStatisticsView: View {
             VStack(spacing: 20) {
                 Text("28.09.2021 18:09:09")
                     .foregroundColor(.white)
+                    .font(Font.custom("product_sans_regular", size: 12))
                 HStack(alignment: VerticalAlignment.center, spacing: 20) {
                     SingleGlobalStatisticsView(totalValues: 4753057, newValues: 4585)
                     SingleGlobalStatisticsView(totalValues: 232001832, newValues: 325341)
@@ -64,8 +81,10 @@ struct SingleGlobalStatisticsView: View {
             Image(systemName: "circle")
             Text("\(totalValues)")
                 .foregroundColor(.white)
+                .font(Font.custom("product_sans_regular", size: 18))
             Text("+ \(newValues)")
                 .foregroundColor(.white)
+                .font(Font.custom("product_sans_regular", size: 14))
         }
     }
 }
@@ -100,7 +119,7 @@ struct IndexView: View {
         ZStack {
             Text("\(index)")
                 .frame(width: 24, height: 24)
-                .font(.system(size: 14))
+                .font(Font.custom("product_sans_regular", size: 14))
                 .foregroundColor(.white)
                 .padding(4)
                 .overlay(Circle().stroke(.white, lineWidth: 2))
@@ -118,8 +137,9 @@ struct CountryStatisticsView: View {
 
     var body: some View {
         ZStack {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 5) {
                 Text(countryName)
+                    .font(Font.custom("product_sans_bold", size: 16))
                     .fontWeight(.bold)
                 HStack {
                     StatisticsView(color: .red, totalValues: 47362899, newValues: 242134)
@@ -137,9 +157,13 @@ struct FlagView: View {
     var body: some View {
         ZStack {
             Circle()
-                .foregroundColor(Color(red: 0.80, green: 0.80, blue: 0.80))
+                .foregroundColor(Color(red: 221/255.0,
+                                       green: 221/255.0,
+                                       blue: 221/255.0))
                 .frame(width: 48, height: 48)
                 .padding(8)
+            URLImage(url: flagUrl)
+                .frame(width: 32, height: 32)
         }
     }
 }
@@ -155,12 +179,12 @@ struct StatisticsView: View {
             Image(systemName: "circle")
                 .background(Circle().fill(color))
             VStack {
-                VStack(spacing: 5) {
+                VStack(spacing: 2) {
                     Text("\(totalValues)")
-                        .font(.system(size: 10))
+                        .font(Font.custom("product_sans_regular", size: 10))
                     Text("+ \(newValues)")
                         .foregroundColor(color)
-                        .font(.system(size: 10))
+                        .font(Font.custom("product_sans_regular", size: 10))
                 }
             }
         }

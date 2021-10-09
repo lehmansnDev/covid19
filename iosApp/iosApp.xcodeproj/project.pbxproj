@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4C55F271192AE005AAA79 /* Shapes.swift */; };
+		F4A4C5622711B68B005AAA79 /* fonts in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C5612711B68B005AAA79 /* fonts */; };
+		F4A4C5642711BC6B005AAA79 /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4C5632711BC6B005AAA79 /* URLImage.swift */; };
 		F4EEADEF270728E300144FA3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEADEE270728E300144FA3 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +32,8 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4A4C55F271192AE005AAA79 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
+		F4A4C5612711B68B005AAA79 /* fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fonts; sourceTree = "<group>"; };
+		F4A4C5632711BC6B005AAA79 /* URLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
 		F4EEADEE270728E300144FA3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,10 +68,12 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				F4A4C5612711B68B005AAA79 /* fonts */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				F4EEADEE270728E300144FA3 /* HomeView.swift */,
 				F4A4C55F271192AE005AAA79 /* Shapes.swift */,
+				F4A4C5632711BC6B005AAA79 /* URLImage.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -139,6 +145,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A4C5622711B68B005AAA79 /* fonts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -172,6 +179,7 @@
 				F4EEADEF270728E300144FA3 /* HomeView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */,
+				F4A4C5642711BC6B005AAA79 /* URLImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
