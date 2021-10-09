@@ -53,11 +53,6 @@ struct GlobalStatisticsView: View {
     
     var body: some View {
         ZStack {
-            BottomRoundedCornersShape(radius: 24)
-                .fill(gradient)
-                .edgesIgnoringSafeArea(.all)
-                .shadow(color: .gray, radius: 3, x: 0, y: 3)
-            
             VStack(spacing: 20) {
                 Text("28.09.2021 18:09:09")
                     .foregroundColor(.white)
@@ -82,8 +77,14 @@ struct GlobalStatisticsView: View {
                                                totalValuesSize: 16)
                         .frame(maxWidth: .infinity)
                 }
+                CountrySearchField()
             }
+            .padding(8)
         }
+        .background(BottomRoundedCornersShape(radius: 24)
+                        .fill(gradient)
+                        .edgesIgnoringSafeArea(.all)
+                        .shadow(color: .gray, radius: 3, x: 0, y: 3))
         .scaledToFit()
     }
 }
@@ -212,6 +213,62 @@ struct StatisticsView: View {
                         .font(Font.custom("product_sans_regular", size: 10))
                 }
             }
+        }
+    }
+}
+
+struct CountrySearchField: View {
+
+    @State private var country: String = ""
+    @State private var isEditing = false
+
+    var body: some View {
+        HStack {
+            FAText(iconName: "search", size: 20)
+                .foregroundColor(.white)
+                .padding(8)
+                .padding(.leading, 10)
+            Spacer()
+            TextField(
+                 "",
+                 text: $country
+            ) { isEditing in
+                self.isEditing = isEditing
+            }
+            .foregroundColor(.white)
+            .accentColor(.white)
+            .multilineTextAlignment(.center)
+            .font(Font.custom("product_sans_regular", size: 16))
+            .autocapitalization(.none)
+            .disableAutocorrection(true)
+            .padding(8)
+            .placeholder(when: !isEditing) {
+                Text("Search country")
+                    .font(Font.custom("product_sans_regular", size: 12))
+                    .foregroundColor(.white)
+            }
+            Spacer()
+            FAText(iconName: "times", size: 20)
+                .foregroundColor(country.isEmpty ? Color.init(white: 0, opacity: 0) : .white)
+                .padding(8)
+                .padding(.trailing, 10)
+                .onTapGesture {
+                    country = ""
+                }
+        }
+        .background(Capsule().fill(Color.init(red: 0, green: 0, blue: 0, opacity: 0.5)))
+    }
+}
+
+extension View {
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .center,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
         }
     }
 }
