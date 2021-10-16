@@ -16,7 +16,7 @@ data class DetailState(
             countrySummary = CountrySummary.EMPTY,
             countryDetails = CountryDetails.EMPTY
         )
-        val ERROR = DetailState(
+        val FAILED = DetailState(
             loading = false,
             failed = true,
             countrySummary = CountrySummary.EMPTY,

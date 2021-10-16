@@ -21,24 +21,24 @@ class DetailViewModel(
     val viewState = _viewState.asStateFlow()
 
     init {
-//        viewModelScope.launch {
-//            val countrySummary = covid19Repository.getCountrySummary(countryCode)
-//            _viewState.value = _viewState.value.copy(countrySummary = countrySummary)
-//            val countryDetails = covid19Repository.getCountryDetails(countryCode)
+        viewModelScope.launch {
+            val countrySummary = repository.getCountrySummary(countryCode)
+            _viewState.value = _viewState.value.copy(countrySummary = countrySummary)
+//            val countryDetails = repository.getCountryDetails(countryCode)
 //
 //            if (countryDetails.isEmpty) {
 //                // Error state
 //                _viewState.value = _viewState.value.copy(
-//                    isLoading = DetailState.ERROR.isLoading,
-//                    isEmpty = DetailState.ERROR.isEmpty
+//                    loading = DetailState.FAILED.loading,
+//                    failed = DetailState.FAILED.failed
 //                )
 //            } else {
 //                _viewState.value = _viewState.value.copy(
-//                    isLoading = false,
-//                    isEmpty = false,
+//                    loading = false,
+//                    failed = false,
 //                    countryDetails = countryDetails
 //                )
 //            }
-//        }
+        }
     }
 }

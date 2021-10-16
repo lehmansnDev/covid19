@@ -20,5 +20,5 @@ insert {
 getAll:
 SELECT * FROM Country;
 
-getById:
-SELECT * FROM Country WHERE id = ?;
+getByCountryCode:
+SELECT * FROM Country WHERE country_code = ? LIMIT 1;

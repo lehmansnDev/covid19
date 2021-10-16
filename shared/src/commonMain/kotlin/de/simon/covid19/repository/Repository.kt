@@ -3,12 +3,16 @@ package de.simon.covid19.repository
 import de.simon.covid19.database.DatabaseDriverFactory
 import de.simon.covid19.database.LocalDB
 import de.simon.covid19.database.countries.getAllCountries
+import de.simon.covid19.database.countries.getCountry
 import de.simon.covid19.database.countries.insert
 import de.simon.covid19.database.global.getGlobal
 import de.simon.covid19.database.global.insert
 import de.simon.covid19.extensions.isInSameHour
 import de.simon.covid19.mapper.CountryDetailMapper
+import de.simon.covid19.mapper.CountryMapper
 import de.simon.covid19.mapper.Covid19Mapper
+import de.simon.covid19.models.CountryDetails
+import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.Covid19SummaryDTO
 import de.simon.covid19.network.Covid19Api
@@ -24,7 +28,8 @@ class Repository(
     databaseDriverFactory: DatabaseDriverFactory,
     private val covid19Api: Covid19Api,
     private val covid19Mapper: Covid19Mapper,
-    private val countryDetailMapper: CountryDetailMapper
+    private val countryDetailMapper: CountryDetailMapper,
+    private val countryMapper: CountryMapper
 ): KoinComponent {
 
     private val localDB = LocalDB.invoke(databaseDriverFactory.createDriver())
@@ -65,12 +70,12 @@ class Repository(
         localDB.insert(summaryDTO.countries)
         return covid19Mapper.map(summaryDTO)
     }
-//
-//    suspend fun getCountrySummary(countryCode: String): CountrySummary =
-//        withContext(Dispatchers.Default) {
-//            preferencesService.getCountrySummary(countryCode)
-//        }
-//
+
+    suspend fun getCountrySummary(countryCode: String): CountrySummary = withContext(Dispatchers.Default) {
+        val countryDTO = localDB.getCountry(countryCode)
+        countryMapper.map(countryDTO!!)
+    }
+
 //    suspend fun getCountryDetails(countryCode: String): CountryDetails =
 //        withContext(Dispatchers.Default) {
 //            try {

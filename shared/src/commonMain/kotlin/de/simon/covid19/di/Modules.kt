@@ -9,5 +9,5 @@ expect fun platformModule(): Module
 
 val commonModule: Module = module {
     single { Covid19Api() }
-    single { Repository(get(), get(), get(), get()) }
+    single { Repository(get(), get(), get(), get(), get()) }
 }

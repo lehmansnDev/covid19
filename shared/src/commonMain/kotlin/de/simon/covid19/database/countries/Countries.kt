@@ -22,8 +22,8 @@ fun LocalDB.getAllCountries(): List<CountryDTO> {
     }
 }
 
-fun LocalDB.getById(id: String): CountryDTO? {
-    val country = countriesQueries.getById(id).executeAsOneOrNull() ?: return null
+fun LocalDB.getCountry(countryCode: String): CountryDTO? {
+    val country = countriesQueries.getByCountryCode(countryCode).executeAsOneOrNull() ?: return null
 
     return CountryDTO(
         country.id,
