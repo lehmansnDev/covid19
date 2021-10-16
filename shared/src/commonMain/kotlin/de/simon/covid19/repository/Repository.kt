@@ -16,21 +16,22 @@ import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.Covid19SummaryDTO
 import de.simon.covid19.network.Covid19Api
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import kotlin.coroutines.CoroutineContext
 
-class Repository(
-    databaseDriverFactory: DatabaseDriverFactory,
-    private val covid19Api: Covid19Api,
-    private val covid19Mapper: Covid19Mapper,
-    private val countryDetailMapper: CountryDetailMapper,
-    private val countryMapper: CountryMapper
-): KoinComponent {
+class Repository: KoinComponent {
+
+    private val databaseDriverFactory: DatabaseDriverFactory by inject()
+    private val covid19Api: Covid19Api by inject()
+    private val covid19Mapper: Covid19Mapper by inject()
+    private val countryDetailMapper: CountryDetailMapper by inject()
+    private val countryMapper: CountryMapper by inject()
 
     private val localDB = LocalDB.invoke(databaseDriverFactory.createDriver())
 
@@ -55,6 +56,13 @@ class Repository(
             } else {
                 Covid19Summary.EMPTY
             }
+        }
+    }
+
+    @DelicateCoroutinesApi
+    fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit) {
+        GlobalScope.launch(MainLoopDispatcher) {
+            success(getCovid19Summary())
         }
     }
 

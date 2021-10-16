@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FASwiftUI
+import shared
 
 var gradient = LinearGradient(gradient: Gradient(colors: [
     Color(red: 0, green: 122/255.0, blue: 122/255.0),
@@ -15,6 +16,9 @@ var gradient = LinearGradient(gradient: Gradient(colors: [
     startPoint: .topLeading, endPoint: .bottomTrailing)
 
 struct HomeScreen: View {
+    
+    @ObservedObject var viewModel: HomeViewModel = HomeViewModel(repository: Repository())
+    
     var body: some View {
         ZStack {
             Color(red: 0.96, green: 0.96, blue: 0.96)
@@ -23,20 +27,16 @@ struct HomeScreen: View {
                 GlobalStatisticsView()
                 GeometryReader { geometry in
                     ScrollView(.vertical) {
-                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                            CountryView(countryName: "USA", index: 1, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "Germany", index: 21, flagUrl: "https://www.countryflags.io/DE/flat/64.png")
-                            CountryView(countryName: "France", index: 122, flagUrl: "https://www.countryflags.io/FR/flat/64.png")
-                            CountryView(countryName: "USA", index: 2, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 3, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 4, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 5, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 6, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 7, flagUrl: "https://www.countryflags.io/US/flat/64.png")
-                            CountryView(countryName: "USA", index: 8, flagUrl: "https://www.countryflags.io/US/flat/64.png")
+                        List {
+                            // TODO: No data loaded
+                            ForEach(viewModel.allCountries, id: \.self) { country in
+                                CountryView(country: country)
+                            }
                         }
-                        .offset(y: 40)
-                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
+//                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
+//                        }
+//                        .offset(y: 40)
+//                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height + 40)
                     .offset(y: -40)
@@ -112,17 +112,15 @@ struct SingleGlobalStatisticsView: View {
 
 struct CountryView: View {
 
-    var countryName: String
-    var index: Int
-    var flagUrl: String
+    var country: CountrySummary
 
     var body: some View {
         ZStack {
             HStack {
-                IndexView(index: index)
-                CountryStatisticsView(countryName: countryName)
+                IndexView(index: country.index)
+                CountryStatisticsView(country: country)
                 Spacer()
-                FlagView(flagUrl: flagUrl)
+                FlagView(flagUrl: country.flagUrl)
             }.background(Capsule()
                             .fill(Color.white)
                             .shadow(color: .gray, radius: 2, x: 0, y: 2))
@@ -134,7 +132,7 @@ struct CountryView: View {
 
 struct IndexView: View {
 
-    var index: Int
+    var index: Int32
 
     var body: some View {
         ZStack {
@@ -154,18 +152,18 @@ struct IndexView: View {
 
 struct CountryStatisticsView: View {
 
-    var countryName: String
+    var country: CountrySummary
 
     var body: some View {
         ZStack {
             VStack(alignment: .leading, spacing: 5) {
-                Text(countryName)
+                Text(country.country)
                     .font(Font.custom("product_sans_bold", size: 16))
                     .fontWeight(.bold)
                 HStack {
-                    StatisticsView(color: .red, totalValues: 47362899, newValues: 242134, iconName: "virus")
+                    StatisticsView(color: .red, totalValues: country.totalConfirmed, newValues: country.newConfirmed, iconName: "virus")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    StatisticsView(color: .gray, totalValues: 84748, newValues: 2151, iconName: "skull-crossbones")
+                    StatisticsView(color: .gray, totalValues: country.totalDeaths, newValues: country.newDeaths, iconName: "skull-crossbones")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
@@ -194,8 +192,8 @@ struct FlagView: View {
 struct StatisticsView: View {
 
     var color: Color
-    var totalValues: Int
-    var newValues: Int
+    var totalValues: Int32
+    var newValues: Int32
     var iconName: String
 
     var body: some View {

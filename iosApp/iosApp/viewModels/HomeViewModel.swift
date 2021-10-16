@@ -18,20 +18,13 @@ class HomeViewModel: ObservableObject {
         state = HomeState.companion.LOADING
         self.repository = repository
         
-        repository.getCovid19Summary { data, error in
-            if(data != nil) {
-                let summary = data!
-                if(summary.isEmpty) {
-                    self.state = HomeState.companion.FAILED
-                } else {
-                    self.allCountries = summary.countries
-                    self.state = HomeState(loading: false, failed: false, globalSummary: summary.global, filteredCountries: self.allCountries, input: "")
-                }
-                
-            } else {
+        repository.getCovid19SummaryIos(success: { summary in
+            if(summary.isEmpty) {
                 self.state = HomeState.companion.FAILED
+            } else {
+                self.allCountries = summary.countries
+                self.state = HomeState(loading: false, failed: false, globalSummary: summary.global, filteredCountries: self.allCountries, input: "")
             }
-        }
+        })
     }
-    
 }
