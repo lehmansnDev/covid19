@@ -1,6 +1,7 @@
 package de.simon.covid19.database
 
-import de.simon.covid19.datalayer.database.covid19.LocalDB
+import com.squareup.sqldelight.db.SqlDriver
+import com.squareup.sqldelight.drivers.native.NativeSqliteDriver
 
 actual class DatabaseDriverFactory {
     actual fun createDriver(): SqlDriver {
