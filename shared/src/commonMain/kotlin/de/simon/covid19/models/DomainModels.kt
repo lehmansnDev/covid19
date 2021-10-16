@@ -11,8 +11,10 @@ data class Covid19Summary(
     companion object {
         val EMPTY =
             Covid19Summary(
-                GlobalSummary.EMPTY, listOf(),
-                null, true
+                GlobalSummary.EMPTY,
+                listOf(),
+                null,
+                true
             )
     }
 }

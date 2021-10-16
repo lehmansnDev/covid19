@@ -1,0 +1,17 @@
+CREATE TABLE Global (
+    new_confirmed INTEGER AS Int NOT NULL,
+    total_confirmed INTEGER AS Int NOT NULL,
+    new_deaths INTEGER AS Int NOT NULL,
+    total_deaths INTEGER AS Int NOT NULL,
+    new_recovered INTEGER AS Int NOT NULL,
+    total_recovered INTEGER AS Int NOT NULL,
+    date TEXT NOT NULL
+);
+
+insert {
+    INSERT OR REPLACE INTO Global(new_confirmed, total_confirmed, new_deaths, total_deaths, new_recovered, total_recovered, date)
+    VALUES(:new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date);
+}
+
+get:
+SELECT * FROM Global LIMIT 1;

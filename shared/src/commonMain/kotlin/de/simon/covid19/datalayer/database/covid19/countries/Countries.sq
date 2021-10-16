@@ -1,0 +1,26 @@
+import java.sql.Date;
+
+CREATE TABLE Country (
+    id TEXT NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    country_code TEXT NOT NULL,
+    slug TEXT NOT NULL,
+    new_confirmed INTEGER AS Int NOT NULL,
+    total_confirmed INTEGER AS Int NOT NULL,
+    new_deaths INTEGER AS Int NOT NULL,
+    total_deaths INTEGER AS Int NOT NULL,
+    new_recovered INTEGER AS Int NOT NULL,
+    total_recovered INTEGER AS Int NOT NULL,
+    date TEXT AS Date NOT NULL
+);
+
+insert {
+    INSERT OR REPLACE INTO Country(id, name, country_code, slug, new_confirmed, total_confirmed, new_deaths, total_deaths, new_recovered, total_recovered, date)
+    VALUES(:id, :name, :country_code, :slug, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date);
+}
+
+getAll:
+SELECT * FROM Country;
+
+getById:
+SELECT * FROM Country WHERE id = ?;

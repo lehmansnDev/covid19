@@ -3,13 +3,15 @@ import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 val ktorVersion = "1.6.3"
 val serializationVersion = "1.2.2"
 val coroutineVersion = "1.5.2"
-val koinVersion = "3.0.0-alpha-2"
+val koinVersion = "3.1.2"
 val datetimeVersion = "0.3.0"
+val sqlDelightVersion = "1.5.2"
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.5.30"
+    id("com.squareup.sqldelight")
 }
 
 kotlin {
@@ -35,26 +37,29 @@ kotlin {
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
+                // KOTLINX
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion")
-
-                // DATETIME
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
+
+                // SQL DELIGHT
+                implementation ("com.squareup.sqldelight:runtime:$sqlDelightVersion")
             }
         }
         val androidMain by getting {
             dependencies {
+                // KTOR
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion")
+                // SQL DELIGHT
+                implementation("com.squareup.sqldelight:android-driver:$sqlDelightVersion")
             }
         }
         val iosMain by getting {
             dependencies {
+                // KTOR
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
+                // SQL DELIGHT
+                implementation("com.squareup.sqldelight:native-driver:$sqlDelightVersion")
             }
         }
         val commonTest by getting {
@@ -79,5 +84,12 @@ android {
     defaultConfig {
         minSdk = 26
         targetSdk = 31
+    }
+}
+
+sqldelight {
+    database("LocalDB") {
+        packageName = "de.simon.covid19.datalayer.database.covid19"
+        sourceFolders = listOf("kotlin")
     }
 }
