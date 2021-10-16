@@ -14,7 +14,7 @@ var gradient = LinearGradient(gradient: Gradient(colors: [
     Color(red: 0, green: 168/255.0, blue: 149/255.0)]),
     startPoint: .topLeading, endPoint: .bottomTrailing)
 
-struct HomeView: View {
+struct HomeScreen: View {
     var body: some View {
         ZStack {
             Color(red: 0.96, green: 0.96, blue: 0.96)
@@ -275,6 +275,6 @@ extension View {
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        HomeScreen()
     }
 }

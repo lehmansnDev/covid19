@@ -2,7 +2,7 @@ package de.simon.covid19.android.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.simon.covid19.android.viewModels.states.DetailState
+import de.simon.covid19.viewModels.states.DetailState
 import de.simon.covid19.repository.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

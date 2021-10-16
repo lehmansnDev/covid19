@@ -1,4 +1,4 @@
-package de.simon.covid19.android.viewModels.states
+package de.simon.covid19.viewModels.states
 
 import de.simon.covid19.models.CountryDetails
 import de.simon.covid19.models.CountrySummary

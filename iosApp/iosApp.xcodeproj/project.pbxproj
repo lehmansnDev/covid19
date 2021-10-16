@@ -19,7 +19,9 @@
 		F4A4C5802711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C57D2711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf */; };
 		F4A4C5822711D5C9005AAA79 /* icons.json in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C5812711D5C9005AAA79 /* icons.json */; };
 		F4A4C58427120ACC005AAA79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C58327120ACC005AAA79 /* Assets.xcassets */; };
-		F4EEADEF270728E300144FA3 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEADEE270728E300144FA3 /* HomeView.swift */; };
+		F4C5D5F4271B4DE30022B82E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5D5F3271B4DE30022B82E /* HomeViewModel.swift */; };
+		F4C5D5FA271B4EA70022B82E /* HomeAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5D5F9271B4EA70022B82E /* HomeAction.swift */; };
+		F4EEADEF270728E300144FA3 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEADEE270728E300144FA3 /* HomeScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -49,7 +51,9 @@
 		F4A4C57D2711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		F4A4C5812711D5C9005AAA79 /* icons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = icons.json; sourceTree = "<group>"; };
 		F4A4C58327120ACC005AAA79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		F4EEADEE270728E300144FA3 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		F4C5D5F3271B4DE30022B82E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		F4C5D5F9271B4EA70022B82E /* HomeAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeAction.swift; sourceTree = "<group>"; };
+		F4EEADEE270728E300144FA3 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +89,11 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				F4C5D5F2271B4DC10022B82E /* viewModels */,
+				F4C5D5F1271B4D6E0022B82E /* ui */,
 				F4A4C56E2711D506005AAA79 /* Resources */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
-				F4EEADEE270728E300144FA3 /* HomeView.swift */,
 				F4A4C55F271192AE005AAA79 /* Shapes.swift */,
 				F4A4C5632711BC6B005AAA79 /* URLImage.swift */,
 			);
@@ -114,6 +119,31 @@
 				F4A4C5762711D57B005AAA79 /* product_sans_regular.ttf */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		F4C5D5F1271B4D6E0022B82E /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				F4EEADEE270728E300144FA3 /* HomeScreen.swift */,
+			);
+			path = ui;
+			sourceTree = "<group>";
+		};
+		F4C5D5F2271B4DC10022B82E /* viewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F4C5D5F5271B4E5F0022B82E /* actions */,
+				F4C5D5F3271B4DE30022B82E /* HomeViewModel.swift */,
+			);
+			path = viewModels;
+			sourceTree = "<group>";
+		};
+		F4C5D5F5271B4E5F0022B82E /* actions */ = {
+			isa = PBXGroup;
+			children = (
+				F4C5D5F9271B4EA70022B82E /* HomeAction.swift */,
+			);
+			path = actions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -220,9 +250,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4EEADEF270728E300144FA3 /* HomeView.swift in Sources */,
+				F4EEADEF270728E300144FA3 /* HomeScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */,
+				F4C5D5FA271B4EA70022B82E /* HomeAction.swift in Sources */,
+				F4C5D5F4271B4DE30022B82E /* HomeViewModel.swift in Sources */,
 				F4A4C5642711BC6B005AAA79 /* URLImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
