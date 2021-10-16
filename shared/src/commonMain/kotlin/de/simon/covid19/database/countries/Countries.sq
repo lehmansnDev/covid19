@@ -1,5 +1,3 @@
-import java.sql.Date;
-
 CREATE TABLE Country (
     id TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
@@ -11,7 +9,7 @@ CREATE TABLE Country (
     total_deaths INTEGER AS Int NOT NULL,
     new_recovered INTEGER AS Int NOT NULL,
     total_recovered INTEGER AS Int NOT NULL,
-    date TEXT AS Date NOT NULL
+    date TEXT NOT NULL
 );
 
 insert {

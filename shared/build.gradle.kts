@@ -43,7 +43,10 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:$datetimeVersion")
 
                 // SQL DELIGHT
-                implementation ("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+                implementation("com.squareup.sqldelight:runtime:$sqlDelightVersion")
+
+                // KOIN
+                implementation("io.insert-koin:koin-core:$koinVersion")
             }
         }
         val androidMain by getting {
@@ -89,7 +92,7 @@ android {
 
 sqldelight {
     database("LocalDB") {
-        packageName = "de.simon.covid19.datalayer.database.covid19"
+        packageName = "de.simon.covid19.database"
         sourceFolders = listOf("kotlin")
     }
 }

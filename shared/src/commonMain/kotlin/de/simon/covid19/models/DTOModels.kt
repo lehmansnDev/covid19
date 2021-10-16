@@ -40,7 +40,7 @@ data class CountryDTO(
     @SerialName("ID")
     val id: String,
     @SerialName("Country")
-    val country: String,
+    val name: String,
     @SerialName("CountryCode")
     val countryCode: String,
     @SerialName("Slug")

@@ -6,13 +6,13 @@ import androidx.lifecycle.viewModelScope
 import de.simon.covid19.android.viewModels.actions.HomeAction
 import de.simon.covid19.android.viewModels.states.HomeState
 import de.simon.covid19.models.CountrySummary
-import de.simon.covid19.repositories.Covid19Repository
+import de.simon.covid19.repository.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.*
 
-class HomeViewModel(covid19Repository: Covid19Repository) : ViewModel() {
+class HomeViewModel(private val repository: Repository) : ViewModel() {
 
     companion object {
         private val TAG = HomeViewModel::class.simpleName
@@ -25,16 +25,16 @@ class HomeViewModel(covid19Repository: Covid19Repository) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val covid19Summary = covid19Repository.getTodaySummary()
-            if (covid19Summary.isEmpty) {
-                _viewState.value = HomeState.ERROR
+            val summary = repository.getCovid19Summary()
+            if (summary.isEmpty) {
+                _viewState.value = HomeState.FAILED
             } else {
-                allCountries.addAll(covid19Summary.countries)
+                allCountries.addAll(summary.countries)
                 _viewState.value =
                     HomeState(
-                        isLoading = false,
-                        isEmpty = false,
-                        global = covid19Summary.global,
+                        loading = false,
+                        failed = false,
+                        globalSummary = summary.global,
                         filteredCountries = allCountries,
                         input = ""
                     )

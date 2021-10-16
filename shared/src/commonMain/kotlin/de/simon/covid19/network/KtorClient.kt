@@ -8,6 +8,7 @@ import io.ktor.client.request.*
 import io.ktor.http.*
 
 class KtorClient {
+
     fun createClient(): HttpClient {
         return HttpClient {
             // Json
@@ -30,8 +31,9 @@ class KtorClient {
     }
 
     private val json = kotlinx.serialization.json.Json {
+//        isLenient = true
+//        encodeDefaults = false
+        useAlternativeNames = false
         ignoreUnknownKeys = true
-        isLenient = true
-        encodeDefaults = false
     }
 }

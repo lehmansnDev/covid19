@@ -37,15 +37,15 @@ dependencies {
     implementation("androidx.core:core-ktx:1.6.0")
 
     // COMPOSE
-    implementation("androidx.compose.ui:ui:1.1.0-alpha04")
-    implementation("androidx.compose.material:material:1.1.0-alpha04")
-    implementation("androidx.compose.ui:ui-tooling:1.1.0-alpha04")
+    implementation("androidx.compose.ui:ui:1.1.0-alpha06")
+    implementation("androidx.compose.material:material:1.1.0-alpha06")
+    implementation("androidx.compose.ui:ui-tooling:1.1.0-alpha06")
 
     // COMPOSE ACTIVITY
     implementation("androidx.activity:activity-compose:1.3.1")
 
     // NAVIGATION
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha09")
+    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
 
     // ACCOMPANIST
     implementation("com.google.accompanist:accompanist-insets:0.18.0")

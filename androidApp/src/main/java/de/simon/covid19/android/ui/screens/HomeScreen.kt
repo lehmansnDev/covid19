@@ -49,7 +49,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (viewState.value.isLoading) {
+        if (viewState.value.loading) {
             // On loading
             FullscreenGradientBox {
                 Icon(
@@ -61,7 +61,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                 )
             }
         } else {
-            if (viewState.value.isEmpty) {
+            if (viewState.value.failed) {
                 // No data available
                 FullscreenGradientBox {
                     Text(
@@ -76,7 +76,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
             } else {
                 // Data available
                 GlobalSummary(
-                    viewState.value.global,
+                    viewState.value.globalSummary,
                     input = viewState.value.input,
                     onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
                     onInputDelete = { viewModel.onAction(HomeAction.InputDelete) })

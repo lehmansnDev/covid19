@@ -1,12 +1,13 @@
-package de.simon.covid19.services
+package de.simon.covid19.network
 
 import de.simon.covid19.models.CountryDetailDTO
 import de.simon.covid19.models.Covid19SummaryDTO
-import de.simon.covid19.network.KtorClient
 import io.ktor.client.*
 import io.ktor.client.request.*
+import org.koin.core.component.KoinComponent
 
-class NetworkService {
+
+class Covid19Api: KoinComponent {
 
     private var httpClient: HttpClient
 
@@ -15,11 +16,11 @@ class NetworkService {
         httpClient = ktor.createClient()
     }
 
-    suspend fun getCovid19Summary(): Covid19SummaryDTO {
+    suspend fun fetchCovid19Summary(): Covid19SummaryDTO {
         return httpClient.get("https://api.covid19api.com/summary")
     }
 
-    suspend fun getCountryDetails(
+    suspend fun fetchCountryDetails(
         countryCode: String,
         from: String,
         to: String

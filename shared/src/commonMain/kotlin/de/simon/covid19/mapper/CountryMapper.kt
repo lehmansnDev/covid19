@@ -9,7 +9,7 @@ import kotlinx.datetime.toLocalDateTime
 class CountryMapper {
     fun map(index: Int, input: CountryDTO): CountrySummary {
         return CountrySummary(
-            input.country,
+            input.name,
             input.countryCode,
             index,
             flagUrl = "https://www.countryflags.io/${input.countryCode}/flat/64.png",
@@ -25,7 +25,7 @@ class CountryMapper {
 
     fun map(input: CountryDTO): CountrySummary {
         return CountrySummary(
-            input.country,
+            input.name,
             input.countryCode,
             -1, /* Not needed in details */
             flagUrl = "https://www.countryflags.io/${input.countryCode}/flat/64.png",
