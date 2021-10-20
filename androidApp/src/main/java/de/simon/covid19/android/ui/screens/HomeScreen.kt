@@ -123,7 +123,7 @@ fun GlobalSummary(
         modifier = Modifier
             .fillMaxWidth(),
         elevation = 8.dp,
-        shape = RoundedCornerShape(0.dp, 0.dp, 16.dp, 16.dp),
+        shape = RoundedCornerShape(0.dp, 0.dp, 32.dp, 32.dp),
     ) {
         Column(
             Modifier
@@ -197,7 +197,7 @@ fun CountrySearchField(
 ) {
     Surface(
         modifier = Modifier
-            .padding(64.dp, 0.dp)
+            .padding(8.dp, 0.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(50)),
         color = Color.Black.copy(alpha = 0.5f)

@@ -4,6 +4,7 @@ import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
+import io.ktor.client.features.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 
@@ -14,6 +15,10 @@ class KtorClient {
             // Json
             install(JsonFeature) {
                 serializer = KotlinxSerializer(json)
+            }
+            install(Logging) {
+                logger = Logger.DEFAULT
+                level = LogLevel.INFO
             }
             // Timeout
             install(HttpTimeout) {
@@ -31,7 +36,7 @@ class KtorClient {
     }
 
     private val json = kotlinx.serialization.json.Json {
-//        isLenient = true
+        isLenient = true
 //        encodeDefaults = false
         useAlternativeNames = false
         ignoreUnknownKeys = true

@@ -1,17 +1,19 @@
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
-val ktorVersion = "1.6.3"
+val ktorVersion = "1.6.4"
 val serializationVersion = "1.2.2"
-val coroutineVersion = "1.5.2"
+val coroutineVersion = "1.5.2-native-mt"
 val koinVersion = "3.1.2"
 val datetimeVersion = "0.3.0"
 val sqlDelightVersion = "1.5.2"
+val loggingVersion = "1.0.0"
 
 plugins {
     kotlin("multiplatform")
     id("com.android.library")
     kotlin("plugin.serialization") version "1.5.30"
     id("com.squareup.sqldelight")
+    kotlin("kapt")
 }
 
 kotlin {
@@ -34,6 +36,7 @@ kotlin {
             dependencies {
                 // KTOR
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("io.ktor:ktor-client-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-serialization:$ktorVersion")
 
@@ -47,6 +50,9 @@ kotlin {
 
                 // KOIN
                 implementation("io.insert-koin:koin-core:$koinVersion")
+
+                // Logging
+                api("org.lighthousegames:logging:$loggingVersion")
             }
         }
         val androidMain by getting {

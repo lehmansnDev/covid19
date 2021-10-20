@@ -11,21 +11,25 @@ import de.simon.covid19.extensions.isInSameHour
 import de.simon.covid19.mapper.CountryDetailMapper
 import de.simon.covid19.mapper.CountryMapper
 import de.simon.covid19.mapper.Covid19Mapper
-import de.simon.covid19.models.CountryDetails
 import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.Covid19SummaryDTO
 import de.simon.covid19.network.Covid19Api
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
-import kotlin.coroutines.CoroutineContext
+import org.lighthousegames.logging.logging
 
 class Repository: KoinComponent {
+
+    companion object {
+        val log = logging()     // or can instantiate KmLog()
+    }
 
     private val databaseDriverFactory: DatabaseDriverFactory by inject()
     private val covid19Api: Covid19Api by inject()
@@ -35,36 +39,52 @@ class Repository: KoinComponent {
 
     private val localDB = LocalDB.invoke(databaseDriverFactory.createDriver())
 
-    suspend fun getCovid19Summary(): Covid19Summary = withContext(Dispatchers.Default) {
+    suspend fun getCovid19Summary(): Covid19Summary = withContext(Dispatchers.Main) {
 
         val lastGlobal = localDB.getGlobal()
-
+        log.d { "Last global is null: ${lastGlobal == null}" }
         if (lastGlobal != null) {
+            log.d { "Check timestamp of last data..." }
             val lastUpdate = Instant.parse(lastGlobal.date).toLocalDateTime(TimeZone.UTC)
             val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
             if (now.isInSameHour(lastUpdate)) {
+                log.d { "Current data is new - Use data from database" }
                 return@withContext getStoredSummary()
+            }
+            else {
+                log.d { "Current data is old..." }
             }
         }
         // If lastUpdate is null or older than an hour
         try {
+            log.d { "Fetch data from api..." }
             val summaryDTO = covid19Api.fetchCovid19Summary()
             return@withContext storeSummary(summaryDTO)
         } catch (e: Exception) {
+            log.d { "Exception: ${e.message}" }
+            log.d { "${e.printStackTrace()}" }
             if(lastGlobal != null) {
-                getStoredSummary()
+                log.d { "Exception but use data from database" }
+                return@withContext getStoredSummary()
             } else {
-                Covid19Summary.EMPTY
+                log.d { "Exception no data available use EMPTY" }
+                return@withContext Covid19Summary.EMPTY
             }
         }
     }
 
-    @DelicateCoroutinesApi
-    fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit) {
-        GlobalScope.launch(MainLoopDispatcher) {
-            success(getCovid19Summary())
-        }
-    }
+//    @DelicateCoroutinesApi
+//    fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit) {
+//        GlobalScope.launch(MainLoopDispatcher) {
+//            success(getCovid19Summary())
+//        }
+//    }
+
+//    @Throws(Exception::class)
+//    suspend fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit)  {
+//        success(getCovid19Summary())
+//    }
+
 
     private fun getStoredSummary(): Covid19Summary {
         val globalDTO = localDB.getGlobal()

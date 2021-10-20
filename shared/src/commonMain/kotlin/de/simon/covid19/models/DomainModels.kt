@@ -1,7 +1,9 @@
 package de.simon.covid19.models
 
 import kotlinx.datetime.LocalDateTime
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Covid19Summary(
     val global: GlobalSummary,
     val countries: List<CountrySummary>,
@@ -19,6 +21,7 @@ data class Covid19Summary(
     }
 }
 
+@Serializable
 data class GlobalSummary(
     val newConfirmed: Int,
     val totalConfirmed: Int,
@@ -36,7 +39,7 @@ data class GlobalSummary(
     }
 }
 
-
+@Serializable
 data class CountrySummary(
     val country: String,
     val countryCode: String,

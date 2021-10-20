@@ -9,13 +9,6 @@ import de.simon.covid19.mapper.GlobalMapper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-val mapperModule = module {
-    single { GlobalMapper() }
-    single { CountryMapper() }
-    single { Covid19Mapper(get(), get()) }
-    single { CountryDetailMapper() }
-}
-
 val viewModelModule = module {
     viewModel { HomeViewModel(get()) }
     viewModel { (countryCode: String) -> DetailViewModel(countryCode, get()) }

@@ -19,24 +19,25 @@ struct HomeScreen: View {
     
     @ObservedObject var viewModel: HomeViewModel = HomeViewModel(repository: Repository())
     
+    init() {
+        viewModel.fetchCountries()
+    }
+    
     var body: some View {
         ZStack {
             Color(red: 0.96, green: 0.96, blue: 0.96)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                GlobalStatisticsView()
+                GlobalStatisticsView(globalSummary: viewModel.state.globalSummary)
                 GeometryReader { geometry in
                     ScrollView(.vertical) {
-                        List {
-                            // TODO: No data loaded
+                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
                             ForEach(viewModel.allCountries, id: \.self) { country in
                                 CountryView(country: country)
                             }
                         }
-//                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-//                        }
-//                        .offset(y: 40)
-//                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
+                        .offset(y: 40)
+                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height + 40)
                     .offset(y: -40)
@@ -51,6 +52,8 @@ struct HomeScreen: View {
 
 struct GlobalStatisticsView: View {
     
+    var globalSummary: GlobalSummary
+    
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
@@ -58,20 +61,20 @@ struct GlobalStatisticsView: View {
                     .foregroundColor(.white)
                     .font(Font.custom("product_sans_regular", size: 12))
                 HStack(alignment: VerticalAlignment.center, spacing: 20) {
-                    SingleGlobalStatisticsView(totalValues: 4753057,
-                                               newValues: 4585,
+                    SingleGlobalStatisticsView(totalValues: globalSummary.totalDeaths,
+                                               newValues: globalSummary.newDeaths,
                                                iconName: "skull-crossbones",
                                                iconSize: 20,
                                                totalValuesSize: 16)
                         .frame(maxWidth: .infinity)
-                    SingleGlobalStatisticsView(totalValues: 232001832,
-                                               newValues: 325341,
+                    SingleGlobalStatisticsView(totalValues: globalSummary.totalConfirmed,
+                                               newValues: globalSummary.newConfirmed,
                                                iconName: "virus",
                                                iconSize: 24,
                                                totalValuesSize: 18)
                         .frame(maxWidth: .infinity)
-                    SingleGlobalStatisticsView(totalValues: 0,
-                                               newValues: 0,
+                    SingleGlobalStatisticsView(totalValues: globalSummary.totalRecovered,
+                                               newValues: globalSummary.newRecovered,
                                                iconName: "shield-virus",
                                                iconSize: 20,
                                                totalValuesSize: 16)
@@ -90,8 +93,8 @@ struct GlobalStatisticsView: View {
 }
 
 struct SingleGlobalStatisticsView: View {
-    var totalValues: Int
-    var newValues: Int
+    var totalValues: Int32
+    var newValues: Int32
     var iconName: String
     var iconSize: CGFloat
     var totalValuesSize: CGFloat
