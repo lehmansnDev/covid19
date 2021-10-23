@@ -3,7 +3,6 @@ package de.simon.covid19.android.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -18,16 +17,16 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.ConstraintSet
+import androidx.constraintlayout.compose.Dimension
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsHeight
@@ -81,68 +80,49 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                 }
             } else {
                 val offsetY = 24.dp
-                // Data available
-                GlobalSummary(
-                    viewState.value.globalSummary,
-                    input = viewState.value.input,
-                    onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
-                    onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
-                LazyColumn(
-                    Modifier
-                        .offset(y = -offsetY)
-                        .padding(8.dp, 0.dp)
-                        .zIndex(-1.0f),
-                    contentPadding = PaddingValues(
-                        0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
-                            LocalWindowInsets.current.navigationBars
-                        ).calculateBottomPadding()
-                    )
-                ) {
-                    items(items = viewState.value.filteredCountries) { countries ->
-                        CountryListView(country = countries, selectCountry = selectCountry)
+                val constraints = ConstraintSet {
+                    val summary = createRefFor("summary")
+                    val list = createRefFor("list")
+
+                    constrain(list) {
+                        top.linkTo(summary.bottom, -offsetY)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                        width = Dimension.fillToConstraints
+                        height = Dimension.fillToConstraints
                     }
                 }
-//                OffsetLazyColumn(
-//                    modifier = Modifier.fillMaxHeight()
-//                        .zIndex(-1.0f),
-//                    contentPadding = PaddingValues(
-//                        0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
-//                            LocalWindowInsets.current.navigationBars
-//                        ).calculateBottomPadding()
-//                    ),
-//                    offsetY = offsetY,
-//                ) {
-//                    items(items = viewState.value.filteredCountries) { countries ->
-//                        CountryListView(country = countries, selectCountry = selectCountry)
-//                    }
-//                }
+                // Data available
+                ConstraintLayout(modifier = Modifier.fillMaxSize(), constraintSet = constraints) {
+                    GlobalSummary(
+                        modifier = Modifier.layoutId("summary"),
+                        viewState.value.globalSummary,
+                        input = viewState.value.input,
+                        onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
+                        onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
+
+                    Box(modifier = Modifier
+                        .layoutId("list")
+                        .zIndex(-1.0f)
+                    ) {
+                        LazyColumn(
+                            Modifier
+                                .fillMaxSize()
+                                .padding(8.dp, 0.dp),
+                            contentPadding = PaddingValues(
+                                0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
+                                    LocalWindowInsets.current.navigationBars
+                                ).calculateBottomPadding()
+                            )
+                        ) {
+                            items(items = viewState.value.filteredCountries) { countries ->
+                                CountryListView(country = countries, selectCountry = selectCountry)
+                            }
+                        }
+                    }
+                }
             }
-        }
-    }
-}
-
-@Composable
-fun OffsetLazyColumn(
-    modifier: Modifier = Modifier,
-    offsetY: Dp,
-    contentPadding: PaddingValues,
-    content: LazyListScope.() -> Unit
-) {
-    val offsetYInPixel = LocalDensity.current.run { offsetY.roundToPx() }
-
-    Layout(
-        modifier = modifier,
-        content = {
-            LazyColumn(
-                modifier = Modifier.padding(8.dp, 0.dp),
-                content = content,
-                contentPadding = contentPadding
-            )
-        }) { measurables, constraints ->
-        val column = measurables[0].measure(constraints)
-        val offset = offsetY.roundToPx()
-        layout(constraints.maxWidth, constraints.maxHeight + offset) {
-            column.placeRelative(IntOffset(0, -(offset)))
         }
     }
 }
@@ -166,14 +146,14 @@ fun FullscreenGradientBox(content: @Composable BoxScope.() -> Unit) {
 
 @Composable
 fun GlobalSummary(
+    modifier: Modifier,
     global: GlobalSummary,
     input: String,
     onInputChanged: (String) -> Unit,
     onInputDelete: () -> Unit
 ) {
     Card(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier,
         elevation = 8.dp,
         shape = RoundedCornerShape(0.dp, 0.dp, 32.dp, 32.dp),
     ) {
