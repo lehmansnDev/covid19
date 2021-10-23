@@ -27,9 +27,6 @@ class HomeViewModel: ObservableObject {
         
         repository.getCovid19Summary { data, error in
             if let summary = data {
-                print("fetchCountries success")
-                print("Summary is Empty: \(summary.isEmpty)")
-                print("Summary countries count: \(summary.countries.count)")
                 self.allCountries = summary.countries
                 self.state = HomeState(loading: false, failed: false, globalSummary: summary.global, filteredCountries: self.allCountries, input: "")
                 
