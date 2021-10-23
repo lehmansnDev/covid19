@@ -107,9 +107,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                         .zIndex(-1.0f)
                     ) {
                         LazyColumn(
-                            Modifier
-                                .fillMaxSize()
-                                .padding(8.dp, 0.dp),
+                            Modifier.fillMaxSize(),
                             contentPadding = PaddingValues(
                                 0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
                                     LocalWindowInsets.current.navigationBars
