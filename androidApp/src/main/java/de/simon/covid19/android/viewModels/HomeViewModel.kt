@@ -10,6 +10,8 @@ import de.simon.covid19.repository.Repository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import java.util.*
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {

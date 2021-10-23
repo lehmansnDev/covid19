@@ -6,6 +6,7 @@ import de.simon.covid19.database.countries.getAllCountries
 import de.simon.covid19.database.countries.getCountry
 import de.simon.covid19.database.countries.insert
 import de.simon.covid19.database.global.getGlobal
+import de.simon.covid19.database.global.getLastUpdate
 import de.simon.covid19.database.global.insert
 import de.simon.covid19.extensions.isInSameHour
 import de.simon.covid19.mapper.CountryDetailMapper
@@ -16,9 +17,7 @@ import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.Covid19SummaryDTO
 import de.simon.covid19.network.Covid19Api
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.collect
 import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import org.koin.core.component.KoinComponent
@@ -41,12 +40,11 @@ class Repository: KoinComponent {
 
     suspend fun getCovid19Summary(): Covid19Summary = withContext(Dispatchers.Main) {
 
-        val lastGlobal = localDB.getGlobal()
-        log.d { "Last global is null: ${lastGlobal == null}" }
-        if (lastGlobal != null) {
+        val lastUpdate = localDB.getLastUpdate()
+        log.d { "Last update is null: ${lastUpdate == null}" }
+        if (lastUpdate != null) {
             log.d { "Check timestamp of last data..." }
-            val lastUpdate = Instant.parse(lastGlobal.date).toLocalDateTime(TimeZone.UTC)
-            val now = Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
+            val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)
             if (now.isInSameHour(lastUpdate)) {
                 log.d { "Current data is new - Use data from database" }
                 return@withContext getStoredSummary()
@@ -63,7 +61,7 @@ class Repository: KoinComponent {
         } catch (e: Exception) {
             log.d { "Exception: ${e.message}" }
             log.d { "${e.printStackTrace()}" }
-            if(lastGlobal != null) {
+            if(lastUpdate != null) {
                 log.d { "Exception but use data from database" }
                 return@withContext getStoredSummary()
             } else {
@@ -72,19 +70,6 @@ class Repository: KoinComponent {
             }
         }
     }
-
-//    @DelicateCoroutinesApi
-//    fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit) {
-//        GlobalScope.launch(MainLoopDispatcher) {
-//            success(getCovid19Summary())
-//        }
-//    }
-
-//    @Throws(Exception::class)
-//    suspend fun getCovid19SummaryIos(success: (Covid19Summary) -> Unit)  {
-//        success(getCovid19Summary())
-//    }
-
 
     private fun getStoredSummary(): Covid19Summary {
         val globalDTO = localDB.getGlobal()

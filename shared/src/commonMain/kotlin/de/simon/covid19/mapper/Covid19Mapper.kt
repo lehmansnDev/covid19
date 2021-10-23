@@ -13,11 +13,12 @@ class Covid19Mapper(
 
     override fun map(input: Covid19SummaryDTO): Covid19Summary {
         val date = Instant.parse(input.date).toLocalDateTime(TimeZone.UTC)
+        val dateInstant = Instant.parse(input.date)
         val global = globalMapper.map(input.global)
         val sortedCountries = input.countries
             .sortedByDescending { it.newConfirmed }
             .sortedByDescending { it.totalConfirmed }
             .mapIndexed { index, countryDTO -> countryMapper.map(index = index + 1, countryDTO) }
-        return Covid19Summary(global, sortedCountries, date, isEmpty = false)
+        return Covid19Summary(global, sortedCountries, date, dateInstant, isEmpty = false)
     }
 }

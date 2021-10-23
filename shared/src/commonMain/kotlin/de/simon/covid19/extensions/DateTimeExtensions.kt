@@ -14,7 +14,3 @@ fun LocalDateTime.minus(dateTimePeriod: DateTimePeriod, timeZone: TimeZone): Loc
         .minus(dateTimePeriod, timeZone)
         .toLocalDateTime(timeZone)
 }
-
-fun LocalDateTime.toDateTimeString(): String {
-    return "${this.year}-${this.month}-${this.dayOfMonth} ${this.hour}-${this.minute}"
-}

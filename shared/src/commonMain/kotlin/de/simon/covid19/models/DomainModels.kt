@@ -1,5 +1,6 @@
 package de.simon.covid19.models
 
+import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
@@ -8,6 +9,7 @@ data class Covid19Summary(
     val global: GlobalSummary,
     val countries: List<CountrySummary>,
     val date: LocalDateTime?,
+    val dateInstant: Instant?,
     val isEmpty: Boolean
 ) {
     companion object {
@@ -15,6 +17,7 @@ data class Covid19Summary(
             Covid19Summary(
                 GlobalSummary.EMPTY,
                 listOf(),
+                null,
                 null,
                 true
             )

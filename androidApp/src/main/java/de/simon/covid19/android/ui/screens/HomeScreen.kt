@@ -3,6 +3,7 @@ package de.simon.covid19.android.ui.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -17,11 +18,17 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.zIndex
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.statusBarsHeight
@@ -38,6 +45,7 @@ import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat
 import java.time.ZoneId
 import java.util.*
+import kotlin.math.roundToInt
 
 @Composable
 fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getViewModel()) {
@@ -47,7 +55,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
     Column(
         Modifier.background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         if (viewState.value.loading) {
             // On loading
@@ -74,6 +82,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                     )
                 }
             } else {
+                val offsetY = 24.dp
                 // Data available
                 GlobalSummary(
                     viewState.value.globalSummary,
@@ -82,15 +91,60 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                     onInputDelete = { viewModel.onAction(HomeAction.InputDelete) })
                 LazyColumn(
                     Modifier
-                        .fillMaxHeight()
-                        .padding(8.dp, 0.dp),
-                    contentPadding = rememberInsetsPaddingValues(LocalWindowInsets.current.navigationBars)
+                        .offset(y = -offsetY)
+                        .padding(8.dp, 0.dp)
+                        .zIndex(-1.0f),
+                    contentPadding = PaddingValues(
+                        0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
+                            LocalWindowInsets.current.navigationBars
+                        ).calculateBottomPadding()
+                    )
                 ) {
                     items(items = viewState.value.filteredCountries) { countries ->
                         CountryListView(country = countries, selectCountry = selectCountry)
                     }
                 }
+//                OffsetLazyColumn(
+//                    modifier = Modifier.fillMaxHeight()
+//                        .zIndex(-1.0f),
+//                    contentPadding = PaddingValues(
+//                        0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
+//                            LocalWindowInsets.current.navigationBars
+//                        ).calculateBottomPadding()
+//                    ),
+//                    offsetY = offsetY,
+//                ) {
+//                    items(items = viewState.value.filteredCountries) { countries ->
+//                        CountryListView(country = countries, selectCountry = selectCountry)
+//                    }
+//                }
             }
+        }
+    }
+}
+
+@Composable
+fun OffsetLazyColumn(
+    modifier: Modifier = Modifier,
+    offsetY: Dp,
+    contentPadding: PaddingValues,
+    content: LazyListScope.() -> Unit
+) {
+    val offsetYInPixel = LocalDensity.current.run { offsetY.roundToPx() }
+
+    Layout(
+        modifier = modifier,
+        content = {
+            LazyColumn(
+                modifier = Modifier.padding(8.dp, 0.dp),
+                content = content,
+                contentPadding = contentPadding
+            )
+        }) { measurables, constraints ->
+        val column = measurables[0].measure(constraints)
+        val offset = offsetY.roundToPx()
+        layout(constraints.maxWidth, constraints.maxHeight + offset) {
+            column.placeRelative(IntOffset(0, -(offset)))
         }
     }
 }

@@ -28,7 +28,7 @@ struct HomeScreen: View {
             Color(red: 0.96, green: 0.96, blue: 0.96)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                GlobalStatisticsView(globalSummary: viewModel.state.globalSummary)
+                GlobalStatisticsView(globalSummary: viewModel.state.globalSummary, date: viewModel.dateString)
                 GeometryReader { geometry in
                     ScrollView(.vertical) {
                         VStack(alignment: HorizontalAlignment.center, spacing: 12) {
@@ -53,11 +53,12 @@ struct HomeScreen: View {
 struct GlobalStatisticsView: View {
     
     var globalSummary: GlobalSummary
+    var date: String
     
     var body: some View {
         ZStack {
             VStack(spacing: 20) {
-                Text("28.09.2021 18:09:09")
+                Text(date)
                     .foregroundColor(.white)
                     .font(Font.custom("product_sans_regular", size: 12))
                 HStack(alignment: VerticalAlignment.center, spacing: 20) {
