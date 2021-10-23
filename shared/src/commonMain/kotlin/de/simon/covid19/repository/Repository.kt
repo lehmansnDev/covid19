@@ -84,7 +84,7 @@ class Repository: KoinComponent {
         return covid19Mapper.map(summaryDTO)
     }
 
-    suspend fun getCountrySummary(countryCode: String): CountrySummary = withContext(Dispatchers.Default) {
+    suspend fun getCountrySummary(countryCode: String): CountrySummary = withContext(Dispatchers.Main) {
         val countryDTO = localDB.getCountry(countryCode)
         countryMapper.map(countryDTO!!)
     }

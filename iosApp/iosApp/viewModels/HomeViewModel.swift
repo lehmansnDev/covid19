@@ -8,7 +8,6 @@
 
 import Foundation
 import shared
-import UIKit
 
 class HomeViewModel: ObservableObject {
     @Published var state: HomeState
@@ -18,13 +17,12 @@ class HomeViewModel: ObservableObject {
     private let repository: Repository
     
     init(repository: Repository) {
-        state = HomeState.companion.LOADING
         self.repository = repository
+        state = HomeState.companion.LOADING
         dateString = ""
     }
     
     func fetchCountries() {
-        
         repository.getCovid19Summary { data, error in
             if let summary = data {
                 self.allCountries = summary.countries

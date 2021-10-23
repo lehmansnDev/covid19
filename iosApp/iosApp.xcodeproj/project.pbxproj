@@ -25,6 +25,7 @@
 		F4F7F87A27242F1900210C85 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F7F87927242F1900210C85 /* DetailViewModel.swift */; };
 		F4F7F87C27242F2700210C85 /* DetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F7F87B27242F2700210C85 /* DetailScreen.swift */; };
 		F4F7F8822724314D00210C85 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4F7F8812724314D00210C85 /* LaunchScreen.storyboard */; };
+		F4F7F884272466B900210C85 /* HeaderStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F7F883272466B900210C85 /* HeaderStatisticsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -60,6 +61,7 @@
 		F4F7F87927242F1900210C85 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
 		F4F7F87B27242F2700210C85 /* DetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScreen.swift; sourceTree = "<group>"; };
 		F4F7F8812724314D00210C85 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F4F7F883272466B900210C85 /* HeaderStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderStatisticsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +160,7 @@
 			children = (
 				F4A4C55F271192AE005AAA79 /* Shapes.swift */,
 				F4A4C5632711BC6B005AAA79 /* URLImage.swift */,
+				F4F7F883272466B900210C85 /* HeaderStatisticsView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				F4F7F87C27242F2700210C85 /* DetailScreen.swift in Sources */,
 				F4EEADEF270728E300144FA3 /* HomeScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				F4F7F884272466B900210C85 /* HeaderStatisticsView.swift in Sources */,
 				F4F7F87A27242F1900210C85 /* DetailViewModel.swift in Sources */,
 				F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */,
 				F4C5D5FA271B4EA70022B82E /* HomeAction.swift in Sources */,

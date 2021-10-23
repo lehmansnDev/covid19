@@ -7,3 +7,34 @@
 //
 
 import Foundation
+import shared
+
+class DetailViewModel: ObservableObject {
+    
+    @Published var state: DetailState
+    
+    private let repository: Repository
+    
+    init(repository: Repository) {
+        self.repository = repository
+        state = DetailState.companion.LOADING
+    }
+    
+    func fetchCountrySummary(countryCode: String) {
+        repository.getCountrySummary(countryCode: countryCode) { data, error in
+            if let summary = data {
+                self.state = DetailState(
+                    loading: false,
+                    failed: false,
+                    countrySummary: summary,
+                    countryDetails: self.state.countryDetails)
+            }
+            if let _ = error {
+                print("fetchCountrySummary failure")
+                self.state = DetailState.companion.FAILED
+            }
+        }
+    }
+    
+}
+

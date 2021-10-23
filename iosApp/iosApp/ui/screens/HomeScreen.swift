@@ -23,50 +23,55 @@ struct HomeScreen: View {
     }
     
     var body: some View {
-        ZStack {
-            Color("Background")
-                .edgesIgnoringSafeArea(.all)
-            if viewModel.state.loading {
-                gradient
-                    .scaledToFill()
+        NavigationView {
+            ZStack {
+                Color("Background")
                     .edgesIgnoringSafeArea(.all)
-                Image("Virus")
-                    .frame(width: 160, height: 160, alignment: .center)
-                    .foregroundColor(.white)
-            } else if viewModel.state.failed {
-                gradient
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                Text("The covid data could not be loaded. \n Check your internet connection and start the app again.")
-                    .padding(8)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-                    .font(Font.custom("product_sans_regular", size: 14))
-            } else {
-                VStack {
-                    GlobalStatisticsView(
-                        globalSummary: viewModel.state.globalSummary,
-                        date: viewModel.dateString,
-                        viewModel: viewModel)
-                    GeometryReader { geometry in
-                        ScrollView(.vertical) {
-                            VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                                ForEach(viewModel.state.filteredCountries, id: \.self) { country in
-                                    CountryView(country: country)
+                if viewModel.state.loading {
+                    gradient
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                    Image("Virus")
+                        .frame(width: 160, height: 160, alignment: .center)
+                        .foregroundColor(.white)
+                } else if viewModel.state.failed {
+                    gradient
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                    Text("The covid data could not be loaded. \n Check your internet connection and start the app again.")
+                        .padding(8)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+                        .font(Font.custom("product_sans_regular", size: 14))
+                } else {
+                    VStack {
+                        GlobalStatisticsView(
+                            globalSummary: viewModel.state.globalSummary,
+                            date: viewModel.dateString,
+                            viewModel: viewModel)
+                        GeometryReader { geometry in
+                            ScrollView(.vertical) {
+                                VStack(alignment: HorizontalAlignment.center, spacing: 12) {
+                                    ForEach(viewModel.state.filteredCountries, id: \.self) { country in
+                                        CountryView(country: country)
+                                    }
                                 }
+                                .offset(y: 40)
+                                .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
                             }
-                            .offset(y: 40)
-                            .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
+                            .frame(width: geometry.size.width, height: geometry.size.height + 40)
+                            .offset(y: -40)
+                            .edgesIgnoringSafeArea(.bottom)
                         }
-                        .frame(width: geometry.size.width, height: geometry.size.height + 40)
-                        .offset(y: -40)
-                        .edgesIgnoringSafeArea(.bottom)
+                        .zIndex(-1)
                     }
-                    .zIndex(-1)
+                    .edgesIgnoringSafeArea(.bottom)
                 }
-                .edgesIgnoringSafeArea(.bottom)
             }
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
+        
     }
 }
 
@@ -82,24 +87,13 @@ struct GlobalStatisticsView: View {
                 Text(date)
                     .foregroundColor(.white)
                     .font(Font.custom("product_sans_regular", size: 12))
-                HStack(alignment: VerticalAlignment.center, spacing: 20) {
-                    SingleGlobalStatisticsView(totalValues: globalSummary.totalDeaths,
-                                               newValues: globalSummary.newDeaths,
-                                               iconName: "skull-crossbones",
-                                               iconSize: 20,
-                                               totalValuesSize: 16)
-                    SingleGlobalStatisticsView(totalValues: globalSummary.totalConfirmed,
-                                               newValues: globalSummary.newConfirmed,
-                                               iconName: "virus",
-                                               iconSize: 24,
-                                               totalValuesSize: 18)
-                    SingleGlobalStatisticsView(totalValues: globalSummary.totalRecovered,
-                                               newValues: globalSummary.newRecovered,
-                                               iconName: "shield-virus",
-                                               iconSize: 20,
-                                               totalValuesSize: 16)
-                        
-                }
+                HeaderStatisticsView(
+                    totalDeaths: globalSummary.totalDeaths,
+                    newDeaths: globalSummary.newDeaths,
+                    totalConfirmed: globalSummary.totalConfirmed,
+                    newConfirmed: globalSummary.newConfirmed,
+                    totalRecovered: globalSummary.totalRecovered,
+                    newRecovered: globalSummary.newRecovered)
                 CountrySearchField(viewModel: viewModel)
             }
             .padding(8)
@@ -112,45 +106,25 @@ struct GlobalStatisticsView: View {
     }
 }
 
-struct SingleGlobalStatisticsView: View {
-    var totalValues: Int32
-    var newValues: Int32
-    var iconName: String
-    var iconSize: CGFloat
-    var totalValuesSize: CGFloat
-
-    var body: some View {
-        VStack(spacing: 8) {
-            FAText(iconName: iconName, size: iconSize)
-                .foregroundColor(.white)
-            Text("\(totalValues)")
-                .foregroundColor(.white)
-                .font(Font.custom("product_sans_regular", size: totalValuesSize))
-            Text("+ \(newValues)")
-                .foregroundColor(.white)
-                .font(Font.custom("product_sans_regular", size: 14))
-        }
-        .frame(maxWidth: .infinity)
-    }
-}
-
 struct CountryView: View {
 
     var country: CountrySummary
 
     var body: some View {
-        ZStack {
-            HStack {
-                IndexView(index: country.index)
-                CountryStatisticsView(country: country)
-                Spacer()
-                FlagView(flagUrl: country.flagUrl)
-            }.background(Capsule()
-                            .fill(Color("Surface"))
-                            .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2))
+        NavigationLink(destination: DetailScreen(countryCode: country.countryCode)) {
+            ZStack {
+                HStack {
+                    IndexView(index: country.index)
+                    CountryStatisticsView(country: country)
+                    Spacer()
+                    FlagView(flagUrl: country.flagUrl)
+                }.background(Capsule()
+                                .fill(Color("Surface"))
+                                .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2))
+            }
+                .scaledToFit()
+                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
         }
-            .scaledToFit()
-            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
     }
 }
 
@@ -182,6 +156,7 @@ struct CountryStatisticsView: View {
         ZStack {
             VStack(alignment: .leading, spacing: 5) {
                 Text(country.country)
+                    .foregroundColor(Color("OnSurface"))
                     .font(Font.custom("product_sans_bold", size: 16))
                     .fontWeight(.bold)
                 HStack {
@@ -198,15 +173,17 @@ struct CountryStatisticsView: View {
 struct FlagView: View {
 
     var flagUrl: String
+    var size: Int = 48
     
     var body: some View {
         ZStack {
             Circle()
                 .foregroundColor(Color("FlagBackground"))
-                .frame(width: 48, height: 48)
-                .padding(8)
+                .frame(width: CGFloat(size), height: CGFloat(size))
+                .padding(CGFloat(size/6))
             URLImage(url: flagUrl)
-                .frame(width: 32, height: 32)
+                .frame(width: CGFloat((size/6) * 4), height: CGFloat((size/6) * 4))
+                .foregroundColor(Color("OnSurface"))
         }
     }
 }
@@ -227,6 +204,7 @@ struct StatisticsView: View {
             VStack {
                 VStack(spacing: 2) {
                     Text("\(totalValues)")
+                        .foregroundColor(Color("OnSurface"))
                         .font(Font.custom("product_sans_regular", size: 10))
                     Text("+ \(newValues)")
                         .foregroundColor(color)
