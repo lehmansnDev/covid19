@@ -56,6 +56,9 @@ class HomeViewModel: ObservableObject {
     }
     
     private func updateInput(input: String) {
+        if(state.input == input) {
+            return
+        }
         print("updateInput \(input)")
         var filteredCountries = self.allCountries;
         if(!input.isEmpty) {

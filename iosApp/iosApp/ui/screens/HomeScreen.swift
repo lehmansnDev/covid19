@@ -11,8 +11,7 @@ import FASwiftUI
 import shared
 
 var gradient = LinearGradient(gradient: Gradient(colors: [
-    Color(red: 0, green: 122/255.0, blue: 122/255.0),
-    Color(red: 0, green: 168/255.0, blue: 149/255.0)]),
+    Color("PrimaryVariant"), Color("Primary")]),
     startPoint: .topLeading, endPoint: .bottomTrailing)
 
 struct HomeScreen: View {
@@ -25,30 +24,48 @@ struct HomeScreen: View {
     
     var body: some View {
         ZStack {
-            Color(red: 0.96, green: 0.96, blue: 0.96)
+            Color("Background")
                 .edgesIgnoringSafeArea(.all)
-            VStack {
-                GlobalStatisticsView(
-                    globalSummary: viewModel.state.globalSummary,
-                    date: viewModel.dateString,
-                    viewModel: viewModel)
-                GeometryReader { geometry in
-                    ScrollView(.vertical) {
-                        VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                            ForEach(viewModel.state.filteredCountries, id: \.self) { country in
-                                CountryView(country: country)
+            if viewModel.state.loading {
+                gradient
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                Image("Virus")
+                    .frame(width: 160, height: 160, alignment: .center)
+                    .foregroundColor(.white)
+            } else if viewModel.state.failed {
+                gradient
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                Text("The covid data could not be loaded. \n Check your internet connection and start the app again.")
+                    .padding(8)
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(.white)
+                    .font(Font.custom("product_sans_regular", size: 14))
+            } else {
+                VStack {
+                    GlobalStatisticsView(
+                        globalSummary: viewModel.state.globalSummary,
+                        date: viewModel.dateString,
+                        viewModel: viewModel)
+                    GeometryReader { geometry in
+                        ScrollView(.vertical) {
+                            VStack(alignment: HorizontalAlignment.center, spacing: 12) {
+                                ForEach(viewModel.state.filteredCountries, id: \.self) { country in
+                                    CountryView(country: country)
+                                }
                             }
+                            .offset(y: 40)
+                            .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
                         }
-                        .offset(y: 40)
-                        .padding(.bottom, 60 + geometry.safeAreaInsets.bottom)
+                        .frame(width: geometry.size.width, height: geometry.size.height + 40)
+                        .offset(y: -40)
+                        .edgesIgnoringSafeArea(.bottom)
                     }
-                    .frame(width: geometry.size.width, height: geometry.size.height + 40)
-                    .offset(y: -40)
-                    .edgesIgnoringSafeArea(.bottom)
+                    .zIndex(-1)
                 }
-                .zIndex(-1)
+                .edgesIgnoringSafeArea(.bottom)
             }
-            .edgesIgnoringSafeArea(.bottom)
         }
     }
 }
@@ -71,19 +88,17 @@ struct GlobalStatisticsView: View {
                                                iconName: "skull-crossbones",
                                                iconSize: 20,
                                                totalValuesSize: 16)
-                        .frame(maxWidth: .infinity)
                     SingleGlobalStatisticsView(totalValues: globalSummary.totalConfirmed,
                                                newValues: globalSummary.newConfirmed,
                                                iconName: "virus",
                                                iconSize: 24,
                                                totalValuesSize: 18)
-                        .frame(maxWidth: .infinity)
                     SingleGlobalStatisticsView(totalValues: globalSummary.totalRecovered,
                                                newValues: globalSummary.newRecovered,
                                                iconName: "shield-virus",
                                                iconSize: 20,
                                                totalValuesSize: 16)
-                        .frame(maxWidth: .infinity)
+                        
                 }
                 CountrySearchField(viewModel: viewModel)
             }
@@ -92,7 +107,7 @@ struct GlobalStatisticsView: View {
         .background(BottomRoundedCornersShape(radius: 24)
                         .fill(gradient)
                         .edgesIgnoringSafeArea(.all)
-                        .shadow(color: .gray, radius: 3, x: 0, y: 3))
+                        .shadow(color: Color("Shadow"), radius: 3, x: 0, y: 3))
         .scaledToFit()
     }
 }
@@ -115,6 +130,7 @@ struct SingleGlobalStatisticsView: View {
                 .foregroundColor(.white)
                 .font(Font.custom("product_sans_regular", size: 14))
         }
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -130,8 +146,8 @@ struct CountryView: View {
                 Spacer()
                 FlagView(flagUrl: country.flagUrl)
             }.background(Capsule()
-                            .fill(Color.white)
-                            .shadow(color: .gray, radius: 2, x: 0, y: 2))
+                            .fill(Color("Surface"))
+                            .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2))
         }
             .scaledToFit()
             .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
@@ -186,9 +202,7 @@ struct FlagView: View {
     var body: some View {
         ZStack {
             Circle()
-                .foregroundColor(Color(red: 221/255.0,
-                                       green: 221/255.0,
-                                       blue: 221/255.0))
+                .foregroundColor(Color("FlagBackground"))
                 .frame(width: 48, height: 48)
                 .padding(8)
             URLImage(url: flagUrl)

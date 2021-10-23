@@ -95,9 +95,9 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				F4C5D5F2271B4DC10022B82E /* viewModels */,
-				F4C5D5F1271B4D6E0022B82E /* ui */,
 				F4A4C56E2711D506005AAA79 /* Resources */,
+				F4C5D5F1271B4D6E0022B82E /* ui */,
+				F4C5D5F2271B4DC10022B82E /* viewModels */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 			);
