@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.Layout
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -45,7 +44,6 @@ import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat
 import java.time.ZoneId
 import java.util.*
-import kotlin.math.roundToInt
 
 @Composable
 fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getViewModel()) {
@@ -88,7 +86,7 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
                     viewState.value.globalSummary,
                     input = viewState.value.input,
                     onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
-                    onInputDelete = { viewModel.onAction(HomeAction.InputDelete) })
+                    onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
                 LazyColumn(
                     Modifier
                         .offset(y = -offsetY)

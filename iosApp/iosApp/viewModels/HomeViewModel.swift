@@ -8,6 +8,7 @@
 
 import Foundation
 import shared
+import UIKit
 
 class HomeViewModel: ObservableObject {
     @Published var state: HomeState
@@ -46,5 +47,32 @@ class HomeViewModel: ObservableObject {
                 self.state = HomeState.companion.FAILED
             }
         }
-    }    
+    }
+    
+    func onAction(action: HomeAction) {
+        switch action {
+        case .InputChanged(let value):
+            updateInput(input: value)
+        case .InputDeleted:
+            updateInput(input: "")
+        }
+    }
+    
+    private func updateInput(input: String) {
+        print("updateInput \(input)")
+        var filteredCountries = self.allCountries;
+        if(!input.isEmpty) {
+            filteredCountries = self.allCountries.filter { country in
+                let countryName = country.country.lowercased()
+                let contains = countryName.contains(input.lowercased())
+                return contains
+            }
+        }
+        state = HomeState(
+            loading: state.loading,
+            failed: state.failed,
+            globalSummary: state.globalSummary,
+            filteredCountries: filteredCountries,
+            input: input)
+    }
 }

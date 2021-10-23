@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+
+enum HomeAction {
+    case InputChanged(String)
+    case InputDeleted
+}

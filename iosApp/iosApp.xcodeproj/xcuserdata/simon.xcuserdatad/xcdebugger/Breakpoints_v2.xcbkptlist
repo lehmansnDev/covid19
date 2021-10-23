@@ -7,32 +7,32 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "94512F3F-0F33-4CB1-8EE3-62BC30EDFC01"
+            uuid = "04AC9382-0DCF-4346-9671-E7BA3740B30B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/viewModels/HomeViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "32"
-            endingLineNumber = "32"
-            landmarkName = "fetchCountries()"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "updateInput(input:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "9F7AC232-C82C-4240-B09E-F4FC3C7DA359"
+            uuid = "335A4DB3-B929-4315-947E-4706B1D5B891"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "iosApp/viewModels/HomeViewModel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
-            landmarkName = "fetchCountries()"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "updateInput(input:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

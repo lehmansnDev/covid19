@@ -28,11 +28,14 @@ struct HomeScreen: View {
             Color(red: 0.96, green: 0.96, blue: 0.96)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-                GlobalStatisticsView(globalSummary: viewModel.state.globalSummary, date: viewModel.dateString)
+                GlobalStatisticsView(
+                    globalSummary: viewModel.state.globalSummary,
+                    date: viewModel.dateString,
+                    viewModel: viewModel)
                 GeometryReader { geometry in
                     ScrollView(.vertical) {
                         VStack(alignment: HorizontalAlignment.center, spacing: 12) {
-                            ForEach(viewModel.allCountries, id: \.self) { country in
+                            ForEach(viewModel.state.filteredCountries, id: \.self) { country in
                                 CountryView(country: country)
                             }
                         }
@@ -54,6 +57,7 @@ struct GlobalStatisticsView: View {
     
     var globalSummary: GlobalSummary
     var date: String
+    var viewModel: HomeViewModel
     
     var body: some View {
         ZStack {
@@ -81,7 +85,7 @@ struct GlobalStatisticsView: View {
                                                totalValuesSize: 16)
                         .frame(maxWidth: .infinity)
                 }
-                CountrySearchField()
+                CountrySearchField(viewModel: viewModel)
             }
             .padding(8)
         }
@@ -220,8 +224,10 @@ struct StatisticsView: View {
 }
 
 struct CountrySearchField: View {
-
-    @State private var country: String = ""
+    
+    var viewModel: HomeViewModel
+    
+    @State private var input: String = ""
     @State private var isEditing = false
 
     var body: some View {
@@ -233,9 +239,13 @@ struct CountrySearchField: View {
             Spacer()
             TextField(
                  "",
-                 text: $country
-            ) { isEditing in
-                self.isEditing = isEditing
+                 text: $input,
+                 onEditingChanged: { isEditing in
+                     self.isEditing = isEditing
+                 }
+            )
+            .onChange(of: input) { newValue in
+                viewModel.onAction(action: .InputChanged(input))
             }
             .foregroundColor(.white)
             .accentColor(.white)
@@ -244,18 +254,19 @@ struct CountrySearchField: View {
             .autocapitalization(.none)
             .disableAutocorrection(true)
             .padding(8)
-            .placeholder(when: !isEditing) {
+            .placeholder(when: !isEditing && input.isEmpty) {
                 Text("Search country")
                     .font(Font.custom("product_sans_regular", size: 12))
                     .foregroundColor(.white)
             }
             Spacer()
             FAText(iconName: "times", size: 20)
-                .foregroundColor(country.isEmpty ? Color.init(white: 0, opacity: 0) : .white)
+                .foregroundColor(input.isEmpty ? Color.init(white: 0, opacity: 0) : .white)
                 .padding(8)
                 .padding(.trailing, 10)
                 .onTapGesture {
-                    country = ""
+                    input = ""
+                    viewModel.onAction(action: .InputDeleted)
                 }
         }
         .background(Capsule().fill(Color.init(red: 0, green: 0, blue: 0, opacity: 0.5)))

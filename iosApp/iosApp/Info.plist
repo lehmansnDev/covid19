@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
 	<key>CFBundleDisplayName</key>
 	<string>Covid-19</string>
 	<key>CFBundleDevelopmentRegion</key>
@@ -53,6 +55,8 @@
 		<string>Font Awesome 5 Free-Regular-400.otf</string>
 		<string>Font Awesome 5 Free-Solid-900.otf</string>
 	</array>
+	<key>UIStatusBarStyle</key>
+	<string>UIStatusBarStyleLightContent</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 </dict>

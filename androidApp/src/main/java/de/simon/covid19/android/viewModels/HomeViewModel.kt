@@ -4,14 +4,12 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.simon.covid19.android.viewModels.actions.HomeAction
-import de.simon.covid19.viewModels.states.HomeState
 import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.repository.Repository
+import de.simon.covid19.viewModels.states.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toInstant
 import java.util.*
 
 class HomeViewModel(private val repository: Repository) : ViewModel() {
@@ -48,7 +46,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
         Log.d(TAG, "onAction: ${action::class.simpleName}")
         when (action) {
             is HomeAction.InputChanged -> updateInput(action.input)
-            is HomeAction.InputDelete -> updateInput("")
+            is HomeAction.InputDeleted -> updateInput("")
         }
     }
 
