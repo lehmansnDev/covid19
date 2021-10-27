@@ -30,34 +30,24 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+
     implementation("com.google.android.material:material:1.4.0")
     implementation("androidx.appcompat:appcompat:1.3.1")
-
     implementation("androidx.core:core-ktx:1.6.0")
 
-    // COMPOSE
-    implementation("androidx.compose.ui:ui:1.1.0-alpha06")
-    implementation("androidx.compose.material:material:1.1.0-alpha06")
-    implementation("androidx.compose.ui:ui-tooling:1.1.0-alpha06")
-    implementation("androidx.constraintlayout:constraintlayout-compose:1.0.0-rc01")
+    implementation(Compose.ui)
+    implementation(Compose.uiTooling)
+    implementation(Compose.material)
+    implementation(Compose.constraintLayout)
+    implementation(Compose.navigation)
+    implementation(Compose.activity)
+    implementation(Compose.coil)
 
-    // COMPOSE ACTIVITY
-    implementation("androidx.activity:activity-compose:1.3.1")
+    implementation(Accompanist.insets)
 
-    // NAVIGATION
-    implementation("androidx.navigation:navigation-compose:2.4.0-alpha10")
+    implementation(Koin.android)
+    implementation(Koin.ext)
+    implementation(Koin.compose)
 
-    // ACCOMPANIST
-    implementation("com.google.accompanist:accompanist-insets:0.18.0")
-    // COIL
-    implementation("io.coil-kt:coil-compose:1.3.2")
-
-    // KOIN
-    implementation("io.insert-koin:koin-android:3.1.2")
-    implementation("io.insert-koin:koin-android-ext:3.0.1-beta-1")
-    implementation("io.insert-koin:koin-androidx-compose:3.1.2")
-
-    // KOTLINX DATETIME
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.3.0")
-
+    implementation(Kotlinx.datetime)
 }
