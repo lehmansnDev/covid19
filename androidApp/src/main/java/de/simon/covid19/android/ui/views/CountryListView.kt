@@ -78,6 +78,11 @@ fun calcPadding(size: Dp): Dp {
     return Dp(paddingValue)
 }
 
+fun calcFlagPadding(size: Dp): Dp {
+    val paddingValue = size.value / 4
+    return Dp(paddingValue)
+}
+
 @Composable
 fun CountryNameText(country: String) {
     Text(
