@@ -174,7 +174,7 @@ struct FlagView: View {
 
     var flagUrl: String
     var size: Int = 48
-    
+
     var body: some View {
         ZStack {
             Circle()
@@ -237,7 +237,7 @@ struct CountrySearchField: View {
                  }
             )
             .onChange(of: input) { newValue in
-                viewModel.onAction(action: .InputChanged(input))
+                viewModel.onAction(action: HomeAction.InputChanged(input: self.input))
             }
             .foregroundColor(.white)
             .accentColor(.white)
@@ -258,7 +258,7 @@ struct CountrySearchField: View {
                 .padding(.trailing, 10)
                 .onTapGesture {
                     input = ""
-                    viewModel.onAction(action: .InputDeleted)
+                    viewModel.onAction(action: HomeAction.InputDeleted())
                 }
         }
         .background(Capsule().fill(Color.init(red: 0, green: 0, blue: 0, opacity: 0.5)))

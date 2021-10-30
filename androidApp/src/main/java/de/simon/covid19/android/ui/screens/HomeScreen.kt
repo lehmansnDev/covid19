@@ -36,8 +36,8 @@ import de.simon.covid19.android.ui.themes.WhiteSmoke
 import de.simon.covid19.android.ui.views.CountryListView
 import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.HomeViewModel
-import de.simon.covid19.android.viewModels.actions.HomeAction
 import de.simon.covid19.models.GlobalSummary
+import de.simon.covid19.viewModels.actions.HomeAction
 import kotlinx.datetime.toJavaLocalDateTime
 import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat

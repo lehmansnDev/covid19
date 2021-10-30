@@ -45,10 +45,12 @@ class HomeViewModel: ObservableObject {
     }
     
     func onAction(action: HomeAction) {
-        switch action {
-        case .InputChanged(let value):
-            updateInput(input: value)
-        case .InputDeleted:
+        if let inputChanged = action as? HomeAction.InputChanged {
+            // After InputDelete InputChanged is called again -> Prevent call again updateInput()
+            if state.input != inputChanged.input {
+                updateInput(input: inputChanged.input)
+            }
+        } else if action is HomeAction.InputDeleted {
             updateInput(input: "")
         }
     }

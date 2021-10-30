@@ -3,9 +3,9 @@ package de.simon.covid19.android.viewModels
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.simon.covid19.android.viewModels.actions.HomeAction
 import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.repository.Repository
+import de.simon.covid19.viewModels.actions.HomeAction
 import de.simon.covid19.viewModels.states.HomeState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
