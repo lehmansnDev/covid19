@@ -3,6 +3,11 @@
 This is a sample project based on KMM, Jetpack Compose and SwiftUI.  
 The architecture model used is MVI.
 
+## Screenshots
+
+![Android](/media/android?raw=true )
+![iOS](/media/iOS?raw=true )
+
 ## Architecture
 
 ![MVI](/media/mvi.png?raw=true )
