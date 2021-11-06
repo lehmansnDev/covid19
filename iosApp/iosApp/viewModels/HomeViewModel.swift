@@ -38,7 +38,6 @@ class HomeViewModel: ObservableObject {
                 }
             }
             if let _ = error {
-                print("fetchCountries failure")
                 self.state = HomeState.companion.FAILED
             }
         }
@@ -59,7 +58,6 @@ class HomeViewModel: ObservableObject {
         if(state.input == input) {
             return
         }
-        print("updateInput \(input)")
         var filteredCountries = self.allCountries;
         if(!input.isEmpty) {
             filteredCountries = self.allCountries.filter { country in

@@ -30,7 +30,6 @@ class DetailViewModel: ObservableObject {
                     countryDetails: self.state.countryDetails)
             }
             if let _ = error {
-                print("fetchCountrySummary failure")
                 self.state = DetailState.companion.FAILED
             }
         }

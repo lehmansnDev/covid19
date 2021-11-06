@@ -20,14 +20,14 @@ struct DetailScreen: View {
     
     init(countryCode: String) {
         self.countryCode = countryCode
-        viewModel.fetchCountrySummary(countryCode: countryCode)
     }
     
     var body: some View {
+        let arrowLeftSize = 20.0
         ZStack {
             VStack(spacing: 20) {
                 HStack(alignment: .center) {
-                    FAText(iconName: "arrow-left", size: 20)
+                    FAText(iconName: "arrow-left", size: arrowLeftSize)
                         .foregroundColor(.white)
                         .onTapGesture {
                             self.presentationMode.wrappedValue.dismiss()
@@ -40,10 +40,11 @@ struct DetailScreen: View {
                     }
                     .frame(maxWidth: .infinity)
                     // Placeholder for symmetry
-                    FAText(iconName: "arrow-left", size: 20)
+                    FAText(iconName: "arrow-left", size: arrowLeftSize)
+                        // Not visible
                         .foregroundColor(Color.init(white: 0, opacity: 0))
                 }
-                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                .padding(.horizontal, 10)
                 .scaledToFit()
                 HeaderStatisticsView(
                     totalDeaths: viewModel.state.countrySummary.totalDeaths,
@@ -61,9 +62,11 @@ struct DetailScreen: View {
         .background(Rectangle()
                         .fill(gradient)
                         .edgesIgnoringSafeArea(.all))
-        .navigationTitle("")
         .navigationBarHidden(true)
         .navigationBarBackButtonHidden(true)
+        .onAppear {
+            viewModel.fetchCountrySummary(countryCode: countryCode)
+        }
     }
 }
 

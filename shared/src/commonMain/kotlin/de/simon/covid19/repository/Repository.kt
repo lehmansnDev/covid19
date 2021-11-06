@@ -46,11 +46,11 @@ class Repository: KoinComponent {
             log.d { "Check timestamp of last data..." }
             val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)
             if (now.isInSameHour(lastUpdate)) {
-                log.d { "Current data is new - Use data from database" }
+                log.d { "Local data is new - Use data from database" }
                 return@withContext getStoredSummary()
             }
             else {
-                log.d { "Current data is old..." }
+                log.d { "Local data is old..." }
             }
         }
         // If lastUpdate is null or older than an hour
@@ -59,13 +59,13 @@ class Repository: KoinComponent {
             val summaryDTO = covid19Api.fetchCovid19Summary()
             return@withContext storeSummary(summaryDTO)
         } catch (e: Exception) {
-            log.d { "Exception: ${e.message}" }
-            log.d { "${e.printStackTrace()}" }
+            log.e { "Exception: ${e.message}" }
+            log.e { "${e.printStackTrace()}" }
             if(lastUpdate != null) {
-                log.d { "Exception but use data from database" }
+                log.d { "Exception - use data from database" }
                 return@withContext getStoredSummary()
             } else {
-                log.d { "Exception no data available use EMPTY" }
+                log.d { "Exception - no data available use EMPTY" }
                 return@withContext Covid19Summary.EMPTY
             }
         }

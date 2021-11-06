@@ -18,10 +18,6 @@ struct HomeScreen: View {
     
     @ObservedObject var viewModel: HomeViewModel = HomeViewModel(repository: Repository())
     
-    init() {
-        viewModel.fetchCountries()
-    }
-    
     var body: some View {
         NavigationView {
             ZStack {
@@ -68,8 +64,10 @@ struct HomeScreen: View {
                     .edgesIgnoringSafeArea(.bottom)
                 }
             }
-            .navigationBarTitle("")
             .navigationBarHidden(true)
+            .onAppear {
+                viewModel.fetchCountries()
+            }
         }
         
     }
@@ -111,20 +109,19 @@ struct CountryView: View {
     var country: CountrySummary
 
     var body: some View {
-        NavigationLink(destination: DetailScreen(countryCode: country.countryCode)) {
-            ZStack {
+        ZStack {
+            NavigationLink(destination: DetailScreen(countryCode: country.countryCode)) {
                 HStack {
                     IndexView(index: country.index)
                     CountryStatisticsView(country: country)
                     Spacer()
                     FlagView(flagUrl: country.flagUrl)
-                }.background(Capsule()
-                                .fill(Color("Surface"))
-                                .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2))
-            }
-                .scaledToFit()
-                .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                }
+            }.scaledToFill()
         }
+        .background(Capsule().fill(Color("Surface"))
+        .shadow(color: Color("Shadow"), radius: 2, x: 0, y: 2))
+        .padding(.horizontal, 10)
     }
 }
 
@@ -167,24 +164,6 @@ struct CountryStatisticsView: View {
                 }
             }
         }.scaledToFit()
-    }
-}
-
-struct FlagView: View {
-
-    var flagUrl: String
-    var size: Int = 48
-
-    var body: some View {
-        ZStack {
-            Circle()
-                .foregroundColor(Color("FlagBackground"))
-                .frame(width: CGFloat(size), height: CGFloat(size))
-                .padding(CGFloat(size/6))
-            URLImage(url: flagUrl)
-                .frame(width: CGFloat((size/6) * 4), height: CGFloat((size/6) * 4))
-                .foregroundColor(Color("OnSurface"))
-        }
     }
 }
 

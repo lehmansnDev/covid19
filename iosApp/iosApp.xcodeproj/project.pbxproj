@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4C55F271192AE005AAA79 /* Shapes.swift */; };
-		F4A4C5642711BC6B005AAA79 /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A4C5632711BC6B005AAA79 /* URLImage.swift */; };
 		F4A4C5672711D079005AAA79 /* FASwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = F4A4C5662711D079005AAA79 /* FASwiftUI */; };
 		F4A4C5782711D57B005AAA79 /* product_sans_bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C5752711D57B005AAA79 /* product_sans_bold.ttf */; };
 		F4A4C5792711D57B005AAA79 /* product_sans_regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C5762711D57B005AAA79 /* product_sans_regular.ttf */; };
@@ -19,6 +18,9 @@
 		F4A4C5802711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C57D2711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf */; };
 		F4A4C5822711D5C9005AAA79 /* icons.json in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C5812711D5C9005AAA79 /* icons.json */; };
 		F4A4C58427120ACC005AAA79 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4A4C58327120ACC005AAA79 /* Assets.xcassets */; };
+		F4C4DC0627369EA7000ADCAE /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = F4C4DC0527369EA7000ADCAE /* URLImage */; };
+		F4C4DC0827369EA7000ADCAE /* URLImageStore in Frameworks */ = {isa = PBXBuildFile; productRef = F4C4DC0727369EA7000ADCAE /* URLImageStore */; };
+		F4C4DC0A27369ED2000ADCAE /* FlagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C4DC0927369ED2000ADCAE /* FlagView.swift */; };
 		F4C5D5F4271B4DE30022B82E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C5D5F3271B4DE30022B82E /* HomeViewModel.swift */; };
 		F4EEADEF270728E300144FA3 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EEADEE270728E300144FA3 /* HomeScreen.swift */; };
 		F4F7F87A27242F1900210C85 /* DetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F7F87927242F1900210C85 /* DetailViewModel.swift */; };
@@ -45,7 +47,6 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4A4C55F271192AE005AAA79 /* Shapes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shapes.swift; sourceTree = "<group>"; };
-		F4A4C5632711BC6B005AAA79 /* URLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
 		F4A4C5752711D57B005AAA79 /* product_sans_bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = product_sans_bold.ttf; sourceTree = "<group>"; };
 		F4A4C5762711D57B005AAA79 /* product_sans_regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = product_sans_regular.ttf; sourceTree = "<group>"; };
 		F4A4C5772711D57B005AAA79 /* product_sans_italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = product_sans_italic.ttf; sourceTree = "<group>"; };
@@ -54,6 +55,7 @@
 		F4A4C57D2711D5C1005AAA79 /* Font Awesome 5 Brands-Regular-400.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Font Awesome 5 Brands-Regular-400.otf"; sourceTree = "<group>"; };
 		F4A4C5812711D5C9005AAA79 /* icons.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = icons.json; sourceTree = "<group>"; };
 		F4A4C58327120ACC005AAA79 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F4C4DC0927369ED2000ADCAE /* FlagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagView.swift; sourceTree = "<group>"; };
 		F4C5D5F3271B4DE30022B82E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		F4EEADEE270728E300144FA3 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		F4F7F87927242F1900210C85 /* DetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewModel.swift; sourceTree = "<group>"; };
@@ -67,6 +69,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C4DC0627369EA7000ADCAE /* URLImage in Frameworks */,
+				F4C4DC0827369EA7000ADCAE /* URLImageStore in Frameworks */,
 				F4A4C5672711D079005AAA79 /* FASwiftUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,8 +152,8 @@
 			isa = PBXGroup;
 			children = (
 				F4A4C55F271192AE005AAA79 /* Shapes.swift */,
-				F4A4C5632711BC6B005AAA79 /* URLImage.swift */,
 				F4F7F883272466B900210C85 /* HeaderStatisticsView.swift */,
+				F4C4DC0927369ED2000ADCAE /* FlagView.swift */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -183,6 +187,8 @@
 			name = iosApp;
 			packageProductDependencies = (
 				F4A4C5662711D079005AAA79 /* FASwiftUI */,
+				F4C4DC0527369EA7000ADCAE /* URLImage */,
+				F4C4DC0727369EA7000ADCAE /* URLImageStore */,
 			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
@@ -214,6 +220,7 @@
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
 				F4A4C5652711D079005AAA79 /* XCRemoteSwiftPackageReference "FASwiftUI" */,
+				F4C4DC0427369EA7000ADCAE /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -272,10 +279,10 @@
 				F4EEADEF270728E300144FA3 /* HomeScreen.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				F4F7F884272466B900210C85 /* HeaderStatisticsView.swift in Sources */,
+				F4C4DC0A27369ED2000ADCAE /* FlagView.swift in Sources */,
 				F4F7F87A27242F1900210C85 /* DetailViewModel.swift in Sources */,
 				F4A4C560271192AE005AAA79 /* Shapes.swift in Sources */,
 				F4C5D5F4271B4DE30022B82E /* HomeViewModel.swift in Sources */,
-				F4A4C5642711BC6B005AAA79 /* URLImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +497,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		F4C4DC0427369EA7000ADCAE /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -497,6 +512,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F4A4C5652711D079005AAA79 /* XCRemoteSwiftPackageReference "FASwiftUI" */;
 			productName = FASwiftUI;
+		};
+		F4C4DC0527369EA7000ADCAE /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4C4DC0427369EA7000ADCAE /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
+		};
+		F4C4DC0727369EA7000ADCAE /* URLImageStore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F4C4DC0427369EA7000ADCAE /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImageStore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
