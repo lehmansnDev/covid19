@@ -5,8 +5,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class Covid19SummaryDTO(
-    @SerialName("ID")
-    val id: String,
     @SerialName("Message")
     val message: String,
     @SerialName("Global")
@@ -37,12 +35,10 @@ data class GlobalDTO(
 
 @Serializable
 data class CountryDTO(
-    @SerialName("ID")
-    val id: String,
-    @SerialName("Country")
-    val name: String,
     @SerialName("CountryCode")
     val countryCode: String,
+    @SerialName("Country")
+    val name: String,
     @SerialName("Slug")
     val slug: String,
     @SerialName("NewConfirmed")

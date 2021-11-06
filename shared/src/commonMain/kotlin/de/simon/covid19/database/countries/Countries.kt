@@ -7,9 +7,8 @@ import de.simon.covid19.models.CountryDTO
 fun LocalDB.getAllCountries(): List<CountryDTO> {
     return countriesQueries.getAll().executeAsList().map { country ->
         CountryDTO(
-            country.id,
-            country.name,
             country.country_code,
+            country.name,
             country.slug,
             country.new_confirmed,
             country.total_confirmed,
@@ -26,9 +25,8 @@ fun LocalDB.getCountry(countryCode: String): CountryDTO? {
     val country = countriesQueries.getByCountryCode(countryCode).executeAsOneOrNull() ?: return null
 
     return CountryDTO(
-        country.id,
-        country.name,
         country.country_code,
+        country.name,
         country.slug,
         country.new_confirmed,
         country.total_confirmed,
@@ -44,9 +42,8 @@ fun LocalDB.insert(countries: List<CountryDTO>) {
     countriesQueries.transaction {
         countries.forEach { countryDTO ->
             countriesQueries.insert(
-                countryDTO.id,
-                countryDTO.name,
                 countryDTO.countryCode,
+                countryDTO.name,
                 countryDTO.slug,
                 countryDTO.newConfirmed,
                 countryDTO.totalConfirmed,

@@ -1,7 +1,6 @@
 CREATE TABLE Country (
-    id TEXT NOT NULL PRIMARY KEY,
+    country_code TEXT NOT NULL PRIMARY KEY,
     name TEXT NOT NULL,
-    country_code TEXT NOT NULL,
     slug TEXT NOT NULL,
     new_confirmed INTEGER AS Int NOT NULL,
     total_confirmed INTEGER AS Int NOT NULL,
@@ -13,8 +12,8 @@ CREATE TABLE Country (
 );
 
 insert {
-    INSERT OR REPLACE INTO Country(id, name, country_code, slug, new_confirmed, total_confirmed, new_deaths, total_deaths, new_recovered, total_recovered, date)
-    VALUES(:id, :name, :country_code, :slug, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date);
+    INSERT OR REPLACE INTO Country(country_code, name, slug, new_confirmed, total_confirmed, new_deaths, total_deaths, new_recovered, total_recovered, date)
+    VALUES(:country_code, :name, :slug, :new_confirmed, :total_confirmed, :new_deaths, :total_deaths, :new_recovered, :total_recovered, :date);
 }
 
 getAll:

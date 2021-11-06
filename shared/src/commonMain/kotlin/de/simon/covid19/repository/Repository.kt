@@ -74,7 +74,7 @@ class Repository: KoinComponent {
     private fun getStoredSummary(): Covid19Summary {
         val globalDTO = localDB.getGlobal()
         val countryDTOs = localDB.getAllCountries()
-        val dto = Covid19SummaryDTO("", "", globalDTO!!, countryDTOs, globalDTO.date)
+        val dto = Covid19SummaryDTO("", globalDTO!!, countryDTOs, globalDTO.date)
         return covid19Mapper.map(dto)
     }
 
