@@ -5,7 +5,8 @@ The architecture model used is MVI.
 
 ## Screenshots
 
-![Android](/media/android.png =x300)![iOS](/media/iOS.png =x300)
+![Android](/media/android.png =x300)
+![iOS](/media/iOS.png =x300)
 
 ## Architecture
 
