@@ -46,6 +46,9 @@ import java.text.DateFormat
 import java.time.ZoneId
 import java.util.*
 
+/**
+ * Show global covid19 statistic and a list of all countries
+ */
 @Composable
 fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getViewModel()) {
 
@@ -198,34 +201,7 @@ fun GlobalSummary(
                 style = MaterialTheme.typography.subtitle2
             )
             Spacer(modifier = Modifier.height(24.dp))
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                GlobalStatisticView(
-                    Modifier.weight(1f),
-                    global.totalDeaths,
-                    global.newDeaths,
-                    MaterialTheme.typography.subtitle1,
-                    R.drawable.skull,
-                    28.dp
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                GlobalStatisticView(
-                    Modifier.weight(1.5f),
-                    global.totalConfirmed,
-                    global.newConfirmed,
-                    MaterialTheme.typography.h5,
-                    R.drawable.virus,
-                    32.dp
-                )
-                Spacer(modifier = Modifier.width(16.dp))
-                GlobalStatisticView(
-                    Modifier.weight(1f),
-                    global.totalRecovered,
-                    global.newRecovered,
-                    MaterialTheme.typography.subtitle1,
-                    R.drawable.virus_shield,
-                    28.dp
-                )
-            }
+            GlobalStatisticView(globalSummary = global)
             Spacer(modifier = Modifier.height(8.dp))
             CountrySearchField(input, onInputChanged, onInputDelete)
             Spacer(modifier = Modifier.height(8.dp))

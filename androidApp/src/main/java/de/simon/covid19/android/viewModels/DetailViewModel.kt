@@ -24,6 +24,8 @@ class DetailViewModel(
         viewModelScope.launch {
             val countrySummary = repository.getCountrySummary(countryCode)
             _viewState.value = _viewState.value.copy(countrySummary = countrySummary)
+
+            // TODO: Implement monthly statistics
 //            val countryDetails = repository.getCountryDetails(countryCode)
 //
 //            if (countryDetails.isEmpty) {

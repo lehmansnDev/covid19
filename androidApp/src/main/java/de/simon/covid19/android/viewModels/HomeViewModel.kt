@@ -25,6 +25,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
     private val allCountries = mutableListOf<CountrySummary>()
 
     init {
+        // Load covid19 summary
         viewModelScope.launch {
             val summary = repository.getCovid19Summary()
             if (summary.isEmpty) {

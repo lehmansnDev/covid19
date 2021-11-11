@@ -22,6 +22,9 @@ import de.simon.covid19.android.viewModels.DetailViewModel
 import org.koin.androidx.compose.getViewModel
 import org.koin.core.parameter.parametersOf
 
+/**
+ * This screen shows details of the country
+ */
 @Composable
 fun DetailScreen(countryCode: String, backPress: () -> Unit) {
     val viewModel = getViewModel<DetailViewModel>(
@@ -67,34 +70,7 @@ fun DetailScreen(countryCode: String, backPress: () -> Unit) {
                     flagUrl = viewState.value.countrySummary.flagUrl
                 )
                 Spacer(modifier = Modifier.height(16.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    GlobalStatisticView(
-                        Modifier.weight(1f),
-                        viewState.value.countrySummary.totalDeaths,
-                        viewState.value.countrySummary.newDeaths,
-                        MaterialTheme.typography.subtitle1,
-                        R.drawable.skull,
-                        28.dp
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    GlobalStatisticView(
-                        Modifier.weight(1.5f),
-                        viewState.value.countrySummary.totalConfirmed,
-                        viewState.value.countrySummary.newConfirmed,
-                        MaterialTheme.typography.h5,
-                        R.drawable.virus,
-                        32.dp
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                    GlobalStatisticView(
-                        Modifier.weight(1f),
-                        viewState.value.countrySummary.totalRecovered,
-                        viewState.value.countrySummary.newRecovered,
-                        MaterialTheme.typography.subtitle1,
-                        R.drawable.virus_shield,
-                        28.dp
-                    )
-                }
+                GlobalStatisticView(countrySummary = viewState.value.countrySummary)
                 Spacer(modifier = Modifier.height(16.dp))
             }
         }

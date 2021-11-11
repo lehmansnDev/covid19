@@ -15,6 +15,10 @@ object Destinations {
     const val COUNTRY_CODE_KEY = "country_code"
 }
 
+
+/**
+ * Setup navigation composable for the app
+ */
 @Composable
 fun NavGraph(startDestination: String = Destinations.HOME_ROUTE) {
     val navController = rememberNavController()
@@ -38,7 +42,7 @@ fun NavGraph(startDestination: String = Destinations.HOME_ROUTE) {
 }
 
 /**
- * Models the navigation actions in the app.
+ * Handles the navigation actions.
  */
 class NavigationActions(navController: NavHostController) {
     val selectCountry: (String) -> Unit = { countryCode: String ->
