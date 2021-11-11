@@ -5,23 +5,20 @@ import de.simon.covid19.models.Covid19Summary
 import de.simon.covid19.models.GlobalSummary
 
 data class HomeState(
-    val loading: Boolean,
-    val failed: Boolean,
+    val type: StateType,
     val globalSummary: GlobalSummary,
     val filteredCountries: List<CountrySummary>,
     val input: String
 ) {
     companion object {
         val LOADING = HomeState(
-            loading = true,
-            failed = false,
+            type = StateType.LOADING,
             globalSummary = Covid19Summary.EMPTY.global,
             filteredCountries = listOf(),
             input = ""
         )
         val FAILED = HomeState(
-            loading = false,
-            failed = true,
+            type = StateType.FAILED,
             globalSummary = Covid19Summary.EMPTY.global,
             filteredCountries = listOf(),
             input = ""

@@ -7,6 +7,7 @@ import de.simon.covid19.models.CountrySummary
 import de.simon.covid19.repository.Repository
 import de.simon.covid19.viewModels.actions.HomeAction
 import de.simon.covid19.viewModels.states.HomeState
+import de.simon.covid19.viewModels.states.StateType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -32,8 +33,7 @@ class HomeViewModel(private val repository: Repository) : ViewModel() {
                 allCountries.addAll(summary.countries)
                 _viewState.value =
                     HomeState(
-                        loading = false,
-                        failed = false,
+                        type = StateType.SUCCEEDED,
                         globalSummary = summary.global,
                         filteredCountries = allCountries,
                         input = ""

@@ -24,7 +24,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.lighthousegames.logging.logging
 
-class Repository: KoinComponent {
+class Repository : KoinComponent {
 
     companion object {
         val log = logging()     // or can instantiate KmLog()
@@ -48,8 +48,7 @@ class Repository: KoinComponent {
             if (now.isInSameHour(lastUpdate)) {
                 log.d { "Local data is new - Use data from database" }
                 return@withContext getStoredSummary()
-            }
-            else {
+            } else {
                 log.d { "Local data is old..." }
             }
         }
@@ -61,7 +60,7 @@ class Repository: KoinComponent {
         } catch (e: Exception) {
             log.e { "Exception: ${e.message}" }
             log.e { "${e.printStackTrace()}" }
-            if(lastUpdate != null) {
+            if (lastUpdate != null) {
                 log.d { "Exception - use data from database" }
                 return@withContext getStoredSummary()
             } else {
@@ -84,10 +83,11 @@ class Repository: KoinComponent {
         return covid19Mapper.map(summaryDTO)
     }
 
-    suspend fun getCountrySummary(countryCode: String): CountrySummary = withContext(Dispatchers.Main) {
-        val countryDTO = localDB.getCountry(countryCode)
-        countryMapper.map(countryDTO!!)
-    }
+    suspend fun getCountrySummary(countryCode: String): CountrySummary =
+        withContext(Dispatchers.Main) {
+            val countryDTO = localDB.getCountry(countryCode)
+            countryMapper.map(countryDTO!!)
+        }
 
 //    suspend fun getCountryDetails(countryCode: String): CountryDetails =
 //        withContext(Dispatchers.Default) {

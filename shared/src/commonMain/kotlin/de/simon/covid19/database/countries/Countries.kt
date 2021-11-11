@@ -1,7 +1,6 @@
 package de.simon.covid19.database.countries
 
 import de.simon.covid19.database.LocalDB
-import de.simon.covid19.database.countries.Country
 import de.simon.covid19.models.CountryDTO
 
 fun LocalDB.getAllCountries(): List<CountryDTO> {

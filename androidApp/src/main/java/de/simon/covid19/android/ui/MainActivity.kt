@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat
 import com.google.accompanist.insets.ProvideWindowInsets
 import de.simon.covid19.android.R
@@ -21,6 +20,7 @@ import de.simon.covid19.android.ui.themes.Covid19Theme
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Remove SplashScreen
         setTheme(R.style.Theme_Covid19)
         super.onCreate(savedInstanceState)
 
@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-@Preview(showBackground = true)
 @Composable
 fun App() {
     Surface(

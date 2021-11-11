@@ -7,7 +7,7 @@ import io.ktor.client.request.*
 import org.koin.core.component.KoinComponent
 
 
-class Covid19Api: KoinComponent {
+class Covid19Api : KoinComponent {
 
     private var httpClient: HttpClient
 

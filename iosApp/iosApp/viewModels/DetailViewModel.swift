@@ -24,8 +24,7 @@ class DetailViewModel: ObservableObject {
         repository.getCountrySummary(countryCode: countryCode) { data, error in
             if let summary = data {
                 self.state = DetailState(
-                    loading: false,
-                    failed: false,
+                    type: StateType.succeeded,
                     countrySummary: summary,
                     countryDetails: self.state.countryDetails)
             }

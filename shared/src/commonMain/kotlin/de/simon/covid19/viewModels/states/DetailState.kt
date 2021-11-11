@@ -4,21 +4,18 @@ import de.simon.covid19.models.CountryDetails
 import de.simon.covid19.models.CountrySummary
 
 data class DetailState(
-    val loading: Boolean,
-    val failed: Boolean,
+    val type: StateType,
     val countrySummary: CountrySummary,
     val countryDetails: CountryDetails,
 ) {
     companion object {
         val LOADING = DetailState(
-            loading = true,
-            failed = false,
+            type = StateType.LOADING,
             countrySummary = CountrySummary.EMPTY,
             countryDetails = CountryDetails.EMPTY
         )
         val FAILED = DetailState(
-            loading = false,
-            failed = true,
+            type = StateType.FAILED,
             countrySummary = CountrySummary.EMPTY,
             countryDetails = CountryDetails.EMPTY
         )

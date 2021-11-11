@@ -23,14 +23,8 @@ struct HomeScreen: View {
             ZStack {
                 Color("Background")
                     .edgesIgnoringSafeArea(.all)
-                if viewModel.state.loading {
-                    gradient
-                        .scaledToFill()
-                        .edgesIgnoringSafeArea(.all)
-                    Image("Virus")
-                        .frame(width: 160, height: 160, alignment: .center)
-                        .foregroundColor(.white)
-                } else if viewModel.state.failed {
+                switch viewModel.state.type {
+                case StateType.failed:
                     gradient
                         .scaledToFill()
                         .edgesIgnoringSafeArea(.all)
@@ -39,7 +33,7 @@ struct HomeScreen: View {
                         .multilineTextAlignment(.center)
                         .foregroundColor(.white)
                         .font(Font.custom("product_sans_regular", size: 14))
-                } else {
+                case StateType.succeeded:
                     VStack {
                         GlobalStatisticsView(
                             globalSummary: viewModel.state.globalSummary,
@@ -62,6 +56,14 @@ struct HomeScreen: View {
                         .zIndex(-1)
                     }
                     .edgesIgnoringSafeArea(.bottom)
+                default:
+                    // Loading state type
+                    gradient
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                    Image("Virus")
+                        .frame(width: 160, height: 160, alignment: .center)
+                        .foregroundColor(.white)
                 }
             }
             .navigationBarHidden(true)

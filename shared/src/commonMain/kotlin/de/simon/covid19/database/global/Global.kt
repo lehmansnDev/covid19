@@ -25,7 +25,7 @@ fun LocalDB.getLastUpdate(): LocalDateTime? {
 fun LocalDB.insert(globalDTO: GlobalDTO) {
     val now = Clock.System.now().toLocalDateTime(TimeZone.UTC)
     var nowString = now.toString()
-    if(nowString.last() != 'Z') {
+    if (nowString.last() != 'Z') {
         nowString = "${nowString}Z"
     }
     globalQueries.insert(

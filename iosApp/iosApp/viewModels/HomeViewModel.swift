@@ -26,7 +26,7 @@ class HomeViewModel: ObservableObject {
         repository.getCovid19Summary { data, error in
             if let summary = data {
                 self.allCountries = summary.countries
-                self.state = HomeState(loading: false, failed: false, globalSummary: summary.global, filteredCountries: self.allCountries, input: "")
+                self.state = HomeState(type: StateType.succeeded, globalSummary: summary.global, filteredCountries: self.allCountries, input: "")
                 
                 // Transform dateInstant to dateString
                 if let dateInstant = summary.dateInstant {
@@ -67,8 +67,7 @@ class HomeViewModel: ObservableObject {
             }
         }
         state = HomeState(
-            loading: state.loading,
-            failed: state.failed,
+            type: state.type,
             globalSummary: state.globalSummary,
             filteredCountries: filteredCountries,
             input: input)

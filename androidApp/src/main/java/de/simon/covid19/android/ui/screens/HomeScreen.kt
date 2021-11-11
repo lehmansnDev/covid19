@@ -38,6 +38,8 @@ import de.simon.covid19.android.ui.views.GlobalStatisticView
 import de.simon.covid19.android.viewModels.HomeViewModel
 import de.simon.covid19.models.GlobalSummary
 import de.simon.covid19.viewModels.actions.HomeAction
+import de.simon.covid19.viewModels.states.HomeState
+import de.simon.covid19.viewModels.states.StateType
 import kotlinx.datetime.toJavaLocalDateTime
 import org.koin.androidx.compose.getViewModel
 import java.text.DateFormat
@@ -49,75 +51,88 @@ fun HomeScreen(selectCountry: (String) -> Unit, viewModel: HomeViewModel = getVi
 
     val viewState = viewModel.viewState.collectAsState()
 
+    when (viewState.value.type) {
+        StateType.LOADING -> LoadingView()
+        StateType.FAILED -> FailedView()
+        StateType.SUCCEEDED -> Covid19View(viewModel, viewState, selectCountry)
+    }
+}
+
+@Composable
+fun LoadingView() {
+    FullscreenGradientBox {
+        Icon(
+            painter = painterResource(id = R.drawable.virus),
+            contentDescription = null,
+            modifier = Modifier
+                .size(96.dp),
+            tint = Color.White,
+        )
+    }
+}
+
+@Composable
+fun FailedView() {
+    FullscreenGradientBox {
+        Text(
+            modifier = Modifier
+                .padding(8.dp),
+            textAlign = TextAlign.Center,
+            text = stringResource(id = R.string.covid_api_not_available),
+            color = WhiteSmoke,
+            style = MaterialTheme.typography.subtitle2
+        )
+    }
+}
+
+@Composable
+fun Covid19View(
+    viewModel: HomeViewModel,
+    viewState: State<HomeState>,
+    selectCountry: (String) -> Unit
+) {
     Column(
         Modifier.background(MaterialTheme.colors.background),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        if (viewState.value.loading) {
-            // On loading
-            FullscreenGradientBox {
-                Icon(
-                    painter = painterResource(id = R.drawable.virus),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(96.dp),
-                    tint = Color.White,
-                )
+        val offsetY = 24.dp
+        val constraints = ConstraintSet {
+            val summary = createRefFor("summary")
+            val list = createRefFor("list")
+
+            constrain(list) {
+                top.linkTo(summary.bottom, -offsetY)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+                width = Dimension.fillToConstraints
+                height = Dimension.fillToConstraints
             }
-        } else {
-            if (viewState.value.failed) {
-                // No data available
-                FullscreenGradientBox {
-                    Text(
-                        modifier = Modifier
-                            .padding(8.dp),
-                        textAlign = TextAlign.Center,
-                        text = stringResource(id = R.string.covid_api_not_available),
-                        color = WhiteSmoke,
-                        style = MaterialTheme.typography.subtitle2
+        }
+        ConstraintLayout(modifier = Modifier.fillMaxSize(), constraintSet = constraints) {
+            GlobalSummary(
+                modifier = Modifier.layoutId("summary"),
+                viewState.value.globalSummary,
+                input = viewState.value.input,
+                onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
+                onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
+
+            Box(
+                modifier = Modifier
+                    .layoutId("list")
+                    .zIndex(-1.0f)
+            ) {
+                LazyColumn(
+                    Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(
+                        0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
+                            LocalWindowInsets.current.navigationBars
+                        ).calculateBottomPadding()
                     )
-                }
-            } else {
-                val offsetY = 24.dp
-                val constraints = ConstraintSet {
-                    val summary = createRefFor("summary")
-                    val list = createRefFor("list")
-
-                    constrain(list) {
-                        top.linkTo(summary.bottom, -offsetY)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                        width = Dimension.fillToConstraints
-                        height = Dimension.fillToConstraints
-                    }
-                }
-                // Data available
-                ConstraintLayout(modifier = Modifier.fillMaxSize(), constraintSet = constraints) {
-                    GlobalSummary(
-                        modifier = Modifier.layoutId("summary"),
-                        viewState.value.globalSummary,
-                        input = viewState.value.input,
-                        onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
-                        onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
-
-                    Box(modifier = Modifier
-                        .layoutId("list")
-                        .zIndex(-1.0f)
-                    ) {
-                        LazyColumn(
-                            Modifier.fillMaxSize(),
-                            contentPadding = PaddingValues(
-                                0.dp, offsetY, 0.dp, rememberInsetsPaddingValues(
-                                    LocalWindowInsets.current.navigationBars
-                                ).calculateBottomPadding()
-                            )
-                        ) {
-                            items(items = viewState.value.filteredCountries) { countries ->
-                                CountryListView(country = countries, selectCountry = selectCountry)
-                            }
-                        }
+                ) {
+                    items(items = viewState.value.filteredCountries) { countries ->
+                        CountryListView(country = countries, selectCountry = selectCountry)
                     }
                 }
             }
