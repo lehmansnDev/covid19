@@ -121,6 +121,7 @@ fun Covid19View(
                 onInputChanged = { viewModel.onAction(HomeAction.InputChanged(it)) },
                 onInputDelete = { viewModel.onAction(HomeAction.InputDeleted) })
 
+            // List of all countries
             Box(
                 modifier = Modifier
                     .layoutId("list")
@@ -160,6 +161,9 @@ fun FullscreenGradientBox(content: @Composable BoxScope.() -> Unit) {
     )
 }
 
+/**
+ * Header view with global covid19 statistics
+ */
 @Composable
 fun GlobalSummary(
     modifier: Modifier,
@@ -209,7 +213,9 @@ fun GlobalSummary(
     }
 }
 
-
+/**
+ * Searchfield with buttons and background
+ */
 @Composable
 fun CountrySearchField(
     input: String,
